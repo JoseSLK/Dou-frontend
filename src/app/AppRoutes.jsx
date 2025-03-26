@@ -28,7 +28,7 @@ export function AppRoutes () {
                     element={
                         <LoginForm
                             onSwitchToRegister={() => navigate("/Dou-frontend/register")}
-                            onSwitchToForgotPassword={() => navigate("/forgot-password")}
+                            onSwitchToForgotPassword={() => navigate("/Dou-frontend/forgot-password")}
                         />
                     }
                 />
