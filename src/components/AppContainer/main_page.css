@@ -6,6 +6,9 @@
     position: relative;
     z-index: 5;
     justify-content: center;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 /* .dou-main-content {

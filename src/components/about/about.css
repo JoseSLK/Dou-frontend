@@ -5,7 +5,15 @@
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    max-height: 600px;
+    height: 100%; 
+    padding: 20px; 
+    box-sizing: border-box; 
+    -webkit-overflow-scrolling: touch; 
+    max-width: 800px; 
+    margin: 0 auto;
+}
+.content-container::-webkit-scrollbar {
+    display: none;
 }
 
 .content-container h1 {
