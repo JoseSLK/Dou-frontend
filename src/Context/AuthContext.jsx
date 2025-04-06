@@ -8,7 +8,9 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null); 
     const [token, setToken] = useState(null); 
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
+    const [userRole, setUserRole] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -16,8 +18,8 @@ export function AuthProvider({ children }) {
         if (storedToken) {
             setToken(storedToken);
             setUser({
-                id: 1,
-                email: "usuario@ejemplo.com",
+                id: "user.username",
+                email: "user_email",
                 name: "Federico",
             });
             navigate("/Dou-frontend/dashboard", {replace: true});
@@ -29,33 +31,48 @@ export function AuthProvider({ children }) {
 
 
     const login = async (email, password) => {
-        try {
-            
-            if (email === "test@example.com" && password === "12345") {
-                const fakeToken = "fake-jwt-token-123";
-                const fakeUser = {
-                    id: 1,
-                    email: email,
-                    name: "Federico",
-                };
 
-                setToken(fakeToken);
-                setUser(fakeUser);
-                localStorage.setItem("token", fakeToken);
-                console.log("Iniciaste sesión correctamente");
-                navigate("/Dou-frontend/dashboard", {replace: true});
-            } else {
-                throw new Error("Credenciales inválidas");
-            }
-        } catch (err) {
-            throw err;
-        }
+        fetch('http://localhost:8080/auth/login', {
+            method: 'POST', 
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: email,
+                user_password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            setToken(data.token);
+            setUser({
+                "id": data.id,
+                "username": data.username,
+                "user_email": data.user_email,
+                "user_role": data.user_role
+            });
+
+            setUserRole(data.user_role);
+            setIsLoggedIn(true);
+
+            navigate("/Dou-frontend/dashboard", {replace: true});
+            setLoading(false);
+        })
+        .catch(error => console.error('Error:', error));
     };
 
     const logout = () => {
-        setUser(null);
-        setToken(null);
+        localStorage.removeItem("user");
         localStorage.removeItem("token");
+        setToken(null);
+        setUser(null);
+        setUserRole(null);
+        isLoggedIn(false);
+        
         navigate("/Dou-frontend/login", {replace: true});
     };
 
