@@ -8,9 +8,6 @@ export function LoginForm ( { onSwitchToRegister, onSwitchToForgotPassword } ) {
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState(null);
-    const [loggedIn, setIsLoggedIn] = useState(false);
-    const [attempts, setAttempts] = useState(0);
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -34,7 +31,6 @@ export function LoginForm ( { onSwitchToRegister, onSwitchToForgotPassword } ) {
             <form onSubmit={handleSubmit} className="dou-login-form">   
                 <input
                     className="dou-login-input"
-                    type="email" 
                     name="email"
                     placeholder="Email" 
                     value={email} 
