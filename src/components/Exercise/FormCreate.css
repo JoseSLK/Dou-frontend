@@ -1,0 +1,187 @@
+.dou-exercises-create {
+    display: flex;
+    width: 100%;
+    height: 100%; 
+    font-size: 1rem; 
+    gap: 30px; 
+    padding: 20px; 
+    box-sizing: border-box;
+}
+
+/* --- Columna del Formulario --- */
+.dou-form-container {
+    flex: 2; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+.dou-form-container h3 {
+    margin: 0 0 10px 0; 
+    color: #333;
+}
+
+/* --- Formulario --- */
+.dou-form-ex-c {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    width: 100%; 
+    height: 100%;
+    padding: 25px; 
+    border: 1px solid #d8dce0; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    box-sizing: border-box;
+}
+
+/* --- Grupos de Formulario (Label + Input) --- */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; 
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+.form-group label {
+    font-weight: 600; 
+    color: #d8dce0; 
+    font-size: 0.9rem;
+}
+
+/* --- Fila para agrupar Memoria y Tiempo --- */
+.dou-form-row {
+    display: flex;
+    gap: 20px; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- Mitad de fila para Memoria y Tiempo --- */
+.form-group-half {
+    flex: 1; 
+}
+
+/* --- Estilo General de Inputs --- */
+.dou-input {
+    width: 100%; 
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box; 
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; 
+}
+
+.dou-input:focus {
+    border-color: #6852F2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(104, 82, 242, 0.15); 
+}
+
+/* --- Estilo Específico Input File --- */
+.dou-input-file {
+    width: 100%;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* --- Estilo del BOTÓN del Input File --- */
+.dou-input-file::file-selector-button {
+    padding: 8px 15px;
+    margin-right: 10px;
+    font-weight: 600; 
+    background-color: #6852F2; 
+    color: white; 
+    border: none; 
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* --- Hover para el BOTÓN del Input File --- */
+.dou-input-file::file-selector-button:hover {
+    background-color: #523dc4; 
+}
+
+
+/* --- Nombre del archivo seleccionado --- */
+.dou-file-name {
+    font-size: 0.85rem;
+    color: #d8dce0;
+    margin-top: 5px;
+    display: inline-block; 
+}
+
+/* --- Botón de Envío --- */
+/* Se mantiene la clase .dou-button-submit */
+.dou-button-submit{
+    padding: 8px 15px;
+    font-weight: 600;
+    background-color: #B5E2F2;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 150px;
+    transition: background-color 0.2s ease;
+}
+
+.dou-button-submit:hover {
+    background-color: #84d1ee; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Mensaje de Error --- */
+.dou-form-error {
+    color: #d9534f; 
+    border: 1px solid #ebccd1;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin: 0 0 15px 0; 
+    font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.dou-form-error.ok {
+    color: #30F284;
+}
+
+
+/* --- Columna de la Guía --- */
+.dou-content-guide {
+    flex: 1; 
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef; 
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    height: 100%; 
+    box-sizing: border-box;
+}
+
+.dou-content-guide h4 {
+    margin: 0 0 10px 0;
+    color: #d8dce0; 
+    text-align: center;
+}
+
+.dou-content-guide p {
+    line-height: 1.6;
+    color: #d8dce0; 
+    font-size: 0.95rem;
+    text-align: left; 
+}
+
+.guide-icon {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 15px;
+    opacity: 0.7;
+    color: #d8dce0;
+}

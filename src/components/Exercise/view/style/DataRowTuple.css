@@ -1,0 +1,32 @@
+.dou-tuple {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    min-width: 150px;
+    width: 80%;
+    transition-duration: 0.3s;
+}
+
+.dou-tuple:hover {
+    border-bottom: 1px solid #30F284;
+}
+
+.dou-tuple:hover .dou-tuple-name {
+    color: #30F284;
+}
+
+.dou-tuple-selected {
+    background-color: #30F284;
+    font-weight: bold;  
+}
+
+.dou-tuple-id {
+    color: #666;
+}
+
+.dou-tuple-name {
+    flex-grow: 1;
+    margin-left: 10px;
+}

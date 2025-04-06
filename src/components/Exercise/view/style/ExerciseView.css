@@ -1,0 +1,21 @@
+.exercise-view-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.exercise-view-left-panel,
+.exercise-view-right-panel {
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.exercise-view-left-panel {
+    border-right: 1px solid #ccc;
+}
+
+.placeholder {
+    text-align: center;
+    color: #888;
+}

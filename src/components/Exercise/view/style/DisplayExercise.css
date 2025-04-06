@@ -1,0 +1,21 @@
+.exercise-display {
+    width: 100%;
+}
+
+.display-title {
+    margin-bottom: 20px;
+}
+
+.display-details,
+.display-limits {
+    margin-bottom: 20px;
+}
+
+.display-statement {
+    line-height: 1.5;
+}
+
+.exercise-display-empty {
+    text-align: center;
+    color: #666;
+}
