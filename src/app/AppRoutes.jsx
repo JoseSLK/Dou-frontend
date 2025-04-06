@@ -8,6 +8,7 @@ import { ForgotPasswordForm } from "../components/login/ForgotPasswordForm";
 import { useAuth } from "../Context/AuthContext";
 import { EducationContent } from "../components/Education_content";
 import { About } from "../components/about";
+import { Exercise } from "../components/Exercise";
 
 export function AppRoutes () {
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ export function AppRoutes () {
     return (
         <AppContainer>
             <Routes>
+                {/* Antes del login */}
                 <Route
                     path="/Dou-frontend/login"
                     element={
@@ -42,8 +44,11 @@ export function AppRoutes () {
                     path="/Dou-frontend/forgot-password"
                     element={<ForgotPasswordForm onSwitchToLogin={() => navigate("/Dou-frontend/login")} />}
                 />
+                
+                {/* Luego del login */}
                 <Route path="/Dou-frontend/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
                     <Route path="education" element={<EducationContent/>} />
+                    <Route path="exercises" element={<Exercise />} />
                 </Route>
 
                 <Route path="/Dou-frontend/about" element={<About />} />
