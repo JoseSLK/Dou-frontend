@@ -47,7 +47,7 @@ export function LinkModules() {
                 <div className={`dou-strip-options ${showOptions? "open": ""}`}>
                     <Link to="/Dou-frontend/dashboard/education" className="dou-strip-option">Contenido</Link>
                     <Link to="/Dou-frontend/constest" className="dou-strip-option">Contest</Link>
-                    <Link to="/Dou-frontend/challeges" className="dou-strip-option">Ejercicios</Link>
+                    <Link to="/Dou-frontend/dashboard/exercises" className="dou-strip-option">Ejercicios</Link>
                 </div>
             )}
         </div>
