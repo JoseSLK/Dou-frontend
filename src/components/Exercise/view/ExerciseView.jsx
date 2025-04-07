@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ExercisePicker } from "./ExercisePicker";
 import { DisplayExercise } from "./DisplayExercise";
 import "./style/ExerciseView.css";
+import { SubmissionArea } from "./SubmissionExercise";
 
 export function ExerciseView() {
     const [selectedExercise, setSelectedExercise] = useState(null);
@@ -28,9 +29,8 @@ export function ExerciseView() {
                     
                     <div className="exercise-view-right-panel">
                         
-                        <div className="placeholder">
-                            <p>Espacio reservado para presentar ejercicios</p>
-                        </div>
+                        <SubmissionArea problemId={selectedExercise?.id}/>
+
                     </div>
                 </>
             )}
