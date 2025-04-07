@@ -29,7 +29,7 @@ export function ExerciseView() {
                     
                     <div className="exercise-view-right-panel">
                         
-                        <SubmissionArea problemId={selectedExercise?.id}/>
+                        <SubmissionArea problemId={selectedExercise?.problem_id}/>
 
                     </div>
                 </>

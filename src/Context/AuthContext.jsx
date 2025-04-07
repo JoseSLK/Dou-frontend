@@ -17,10 +17,13 @@ export function AuthProvider({ children }) {
         const storedToken = localStorage.getItem("token");
         if (storedToken) {
             setToken(storedToken);
+            const storedUser = localStorage.getItem("user");
+            const parsedUser = JSON.parse(storedUser);
             setUser({
-                id: "user.username",
-                email: "user_email",
-                name: "Federico",
+                id: parsedUser.user_id,
+                email: parsedUser.user_email,
+                name: parsedUser.username,
+                role: parsedUser.user_role,
             });
             navigate("/Dou-frontend/dashboard", {replace: true});
         } else {

@@ -59,7 +59,7 @@ export function SubmissionArea({ problemId }) {
 
         try {
             console.log("Enviando solicitud a http://localhost:8080/submission");
-            const response = await fetch("http://localhost:8080/submission", {
+            const response = await fetch("http://localhost:8080/submission/", {
                 method: "POST",
                 body: formData,
             });
@@ -67,6 +67,8 @@ export function SubmissionArea({ problemId }) {
             console.log("Respuesta recibida. Status:", response.status);
             if (response.ok) {
                 console.log("Submission successful");
+                const responseData = await response.json();
+                console.log("Respuesta del servidor:", responseData);
                 setCode("");
                 setFile(null);
             } else {
