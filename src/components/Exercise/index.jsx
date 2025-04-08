@@ -26,7 +26,12 @@ export function Exercise(){
                 ) : status === "search"? (
                     <ExerciseView />
                 ) : (
-                    <div>Por favor, selecciona una acción (Crear o Buscar).</div>
+                    <div class="presentacion-container">
+                        <h2>Presentación de Ejercicios</h2>
+                        <p><span class="highlight">¡Bienvenido!</span> Aquí puedes gestionar tus ejercicios de programación competitiva.</p>
+                        <p>Por favor, selecciona una acción para continuar: <span class="highlight">Crear</span> un nuevo desafío o <span class="highlight">Buscar</span> uno ya existente.</p>
+                        <p>Recuerda que cada ejercicio es una oportunidad para mejorar tus habilidades y avanzar en el ranking. 💪</p>
+                    </div>
                 )
             }
 

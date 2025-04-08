@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ExercisePicker } from "./ExercisePicker";
 import { DisplayExercise } from "./DisplayExercise";
 import "./style/ExerciseView.css";
-import { SubmissionArea } from "./SubmissionExercise";
+import { SubmissionArea } from "./SubmissionArea";
 
 export function ExerciseView() {
     const [selectedExercise, setSelectedExercise] = useState(null);
