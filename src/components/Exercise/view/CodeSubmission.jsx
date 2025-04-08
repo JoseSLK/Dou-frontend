@@ -1,11 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./style/Submission.css";
-import { useAuth } from "../../../Context/AuthContext"; // Adjust the path as needed
+import { useAuth } from "../../../Context/AuthContext";
 
-export function SubmissionArea({ problemId }) {
+export function CodeSubmission({ problemId }) {
     const [selectedLanguage, setSelectedLanguage] = useState("cpp");
     const [code, setCode] = useState("");
     const [file, setFile] = useState(null);
+    const [submissionStatus, setSubmissionStatus] = useState(null); // New state for feedback
     const { user } = useAuth();
 
     const programmingLanguages = [
@@ -16,80 +17,108 @@ export function SubmissionArea({ problemId }) {
     ];
 
     const handleLanguageChange = (e) => {
-        console.log("Lenguaje seleccionado:", e.target.value);
+        console.log("Language changed to:", e.target.value);
         setSelectedLanguage(e.target.value);
     };
 
     const handleCodeChange = (e) => {
-        console.log("Código actualizado, líneas:", e.target.value.split("\n").length);
+        console.log("Code updated, length:", e.target.value.length);
         setCode(e.target.value);
     };
 
     const handleFileUpload = (e) => {
         const uploadedFile = e.target.files[0];
-        console.log("Archivo subido:", uploadedFile?.name, "Tamaño:", uploadedFile?.size);
+        console.log("File uploaded:", {
+            name: uploadedFile?.name,
+            size: uploadedFile?.size,
+            type: uploadedFile?.type
+        });
         setFile(uploadedFile);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Iniciando submit...");
+        console.log("Submit initiated", {
+            userId: user.id,
+            problemId,
+            language: selectedLanguage,
+            hasFile: !!file,
+            codeLength: code.length
+        });
 
         const formData = new FormData();
         formData.append("user_id", user.id);
         formData.append("problem_id", problemId);
         formData.append("lang", selectedLanguage);
 
-        console.log("Datos básicos del FormData:", {
-            user_id: user.id,
-            problem_id: problemId,
-            lang: selectedLanguage,
-        });
-
         if (file) {
-            console.log("Modo archivo: Usando archivo subido");
+            console.log("Submitting with file:", file.name);
             formData.append("source", file);
         } else {
-            console.log("Modo editor: Creando blob desde el código");
+            console.log("Submitting with code editor content");
             const blob = new Blob([code], { type: "text/plain" });
             const filename = `${problemId}.${selectedLanguage}.txt`;
             formData.append("source", blob, filename);
-            console.log("Blob creado:", filename, "Tamaño:", blob.size);
+            console.log("Created blob:", { size: blob.size, filename });
         }
 
         try {
-            console.log("Enviando solicitud a http://localhost:8080/submission");
+            console.log("Sending request to server...");
+            setSubmissionStatus("Submitting..."); // Initial feedback
             const response = await fetch("http://localhost:8080/submission/", {
                 method: "POST",
                 body: formData,
             });
 
-            console.log("Respuesta recibida. Status:", response.status);
+            console.log("Response received:", {
+                status: response.status,
+                statusText: response.statusText
+            });
+
             if (response.ok) {
-                console.log("Submission successful");
                 const responseData = await response.json();
-                console.log("Respuesta del servidor:", responseData);
+                console.log("Submission successful, server response:", responseData);
+                
+                // Set feedback based on veredict
+                switch (responseData.veredict) {
+                    case "AC":
+                        setSubmissionStatus("Accepted! Your solution is correct.");
+                        break;
+                    case "CE":
+                        setSubmissionStatus("Compile Error: Please check your code syntax.");
+                        break;
+                    default:
+                        setSubmissionStatus(`Submission received. Veredict: ${responseData.veredict}`);
+                }
+                
                 setCode("");
                 setFile(null);
+                
+                // Clear feedback after 5 seconds
+                setTimeout(() => setSubmissionStatus(null), 5000);
             } else {
-                console.log("Error en la respuesta. Status:", response.status);
                 const errorText = await response.text();
-                console.log("Mensaje del servidor:", errorText);
+                console.log("Submission failed:", {
+                    status: response.status,
+                    error: errorText
+                });
+                setSubmissionStatus("Submission failed. Please try again.");
             }
         } catch (error) {
-            console.error("Submission error:", error);
+            console.error("Submission error:", error.message);
+            setSubmissionStatus("Error: Could not connect to server.");
         }
     };
 
+    console.log("Component render", { 
+        selectedLanguage, 
+        codeLength: code.length, 
+        file: !!file, 
+        submissionStatus 
+    });
+
     return (
         <div className="dou-submission-content">
-            {/* Tab Menu */}
-            <div className="submission-tabs">
-                <button className="active-tab">Code Submission</button>
-                <button disabled>Future Feature</button>
-            </div>
-
-            {/* Header with language selector and upload button */}
             <div className="submission-header">
                 <select 
                     value={selectedLanguage}
@@ -112,7 +141,6 @@ export function SubmissionArea({ problemId }) {
                 </label>
             </div>
 
-            {/* Code Editor */}
             <div className="code-editor-container">
                 <textarea
                     className="code-editor"
@@ -128,10 +156,19 @@ export function SubmissionArea({ problemId }) {
                 </div>
             </div>
 
-            {/* Submit Button */}
             <button onClick={handleSubmit} className="submit-button">
-                Submit
+                Submit Code
             </button>
+
+            {/* Feedback Display */}
+            {submissionStatus && (
+                <div className={`submission-feedback ${
+                    submissionStatus.includes("Accepted") ? "success" : 
+                    submissionStatus.includes("Error") ? "error" : "info"
+                }`}>
+                    {submissionStatus}
+                </div>
+            )}
         </div>
     );
 }
