@@ -2,39 +2,39 @@ import React, {useState} from "react";
 import "../Exercise/FormCreate.css"
 
 export function FormCreate() {
-     const [title, setTitle] = useState(""); 
-     const [memory, setMemory] = useState(""); 
-     const [time, setTime] = useState("");    
-     const [file, setFile] =     useState(null);   
-     const [error, setError] = useState("");   
-     const [ok, setOk] = useState(false);
- 
-     const handleSubmit = (event) => {
-         event.preventDefault();
-         setError(""); 
- 
-         
-         console.log("Datos listos para manipular:");
-         console.log("Título:", title); 
-         console.log("Memoria (MB):", memory); 
-         console.log("Tiempo (ms):", time);     
-         console.log("Archivo:", file);      
- 
-         if (!title || !memory || !time || !file) {
-             setError("Todos los campos son obligatorios, incluyendo el archivo.");
-             return; 
-         }
- 
-         if (isNaN(parseInt(memory, 10)) || parseInt(memory, 10) <= 0) {
-             setError("La memoria debe ser un número positivo.");
-             return;
-         }
-         
-         if (isNaN(parseInt(time, 10)) || parseInt(time, 10) <= 0) {
-             setError("El tiempo de ejecución debe ser un número positivo.");
-             return;
-         }
- 
+    const [title, setTitle] = useState(""); 
+    const [memory, setMemory] = useState(""); 
+    const [time, setTime] = useState("");    
+    const [file, setFile] =     useState(null);   
+    const [error, setError] = useState("");   
+    const [ok, setOk] = useState(false);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setError(""); 
+
+        
+        console.log("Datos listos para manipular:");
+        console.log("Título:", title); 
+        console.log("Memoria (MB):", memory); 
+        console.log("Tiempo (ms):", time);     
+        console.log("Archivo:", file);      
+
+        if (!title || !memory || !time || !file) {
+            setError("Todos los campos son obligatorios, incluyendo el archivo.");
+            return; 
+        }
+
+        if (isNaN(parseInt(memory, 10)) || parseInt(memory, 10) <= 0) {
+            setError("La memoria debe ser un número positivo.");
+            return;
+        }
+        
+        if (isNaN(parseInt(time, 10)) || parseInt(time, 10) <= 0) {
+            setError("El tiempo de ejecución debe ser un número positivo.");
+            return;
+        }
+
         const formData = new FormData();
         formData.append('name', title);
         console.log("formData después de 'name':", formData.get('name'));
@@ -66,24 +66,23 @@ export function FormCreate() {
             }, 5000);
         })
         .catch(error => { console.error('Error:', error); setError('Error al crear el ejercicio.'); });
- 
         setTitle(''); setMemory(''); setTime(''); setFile(null); event.target.reset(); 
-     };
+    };
  
-     const handleFileChange = (event) => {
+    const handleFileChange = (event) => {
 
-         const selectedFile = event.target.files[0]; 
-         if (selectedFile) {
-             setFile(selectedFile); 
-             console.log("Archivo seleccionado:", selectedFile);
-         } else {
-             setFile(null); 
-         }
-     };
- 
-     return (
+        const selectedFile = event.target.files[0]; 
+        if (selectedFile) {
+            setFile(selectedFile); 
+            console.log("Archivo seleccionado:", selectedFile);
+        } else {
+            setFile(null); 
+        }
+    };
+    
+    return (
             
-            <div className="dou-exercises-create">
+        <div className="dou-exercises-create">
 
             <div className="dou-form-container">
                 <form className="dou-form-ex-c" onSubmit={handleSubmit} noValidate>
