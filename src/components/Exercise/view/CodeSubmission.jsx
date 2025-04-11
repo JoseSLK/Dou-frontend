@@ -6,7 +6,7 @@ export function CodeSubmission({ problemId }) {
     const [selectedLanguage, setSelectedLanguage] = useState("cpp");
     const [code, setCode] = useState("");
     const [file, setFile] = useState(null);
-    const [submissionStatus, setSubmissionStatus] = useState(null); // New state for feedback
+    const [submissionStatus, setSubmissionStatus] = useState(null);
     const { user } = useAuth();
 
     const programmingLanguages = [
@@ -54,17 +54,22 @@ export function CodeSubmission({ problemId }) {
         if (file) {
             console.log("Submitting with file:", file.name);
             formData.append("source", file);
-        } else {
+        } else if (code && code.trim() !== "") {
             console.log("Submitting with code editor content");
             const blob = new Blob([code], { type: "text/plain" });
             const filename = `${problemId}.${selectedLanguage}.txt`;
             formData.append("source", blob, filename);
             console.log("Created blob:", { size: blob.size, filename });
+        } else {
+            setSubmissionStatus("Please provide code or upload a file.");
+            console.error("No code or file provided for submission.");
+            setTimeout(() => setSubmissionStatus(null), 5000);
+            return;
         }
 
         try {
             console.log("Sending request to server...");
-            setSubmissionStatus("Submitting..."); // Initial feedback
+            setSubmissionStatus("Submitting...");
             const response = await fetch("http://localhost:8080/submission/", {
                 method: "POST",
                 body: formData,
@@ -94,7 +99,6 @@ export function CodeSubmission({ problemId }) {
                 setCode("");
                 setFile(null);
                 
-                // Clear feedback after 5 seconds
                 setTimeout(() => setSubmissionStatus(null), 5000);
             } else {
                 const errorText = await response.text();
