@@ -25,7 +25,7 @@ export function DisplayExercise({ exercise }) {
         <div className="exercise-display">
             <h3 className="display-title">{problem_name} (ID: {problem_id})</h3>
             <div className="display-details">
-                <h4>Enunciado:</h4>
+                <h4 className="c-point">Statement:</h4>
                 <div className="display-statement">
                     <ReactMarkdown
                         components={{
@@ -54,9 +54,9 @@ export function DisplayExercise({ exercise }) {
             </div>
 
             <div className="display-limits">
-                <h4>Límites:</h4>
-                <p>Memoria: <strong>{problem_memory_mb_limit} MB</strong></p>
-                <p>Tiempo: <strong>{problem_time_ms_limit} ms</strong></p>
+                <h4><span className="c-point">Limits:</span></h4>
+                <p><span className="c-point">Memory:</span> <strong>{problem_memory_mb_limit} MB</strong></p>
+                <p><span className="c-point">Time:</span> <strong>{problem_time_ms_limit} ms</strong></p>
             </div>
         </div>
     );
