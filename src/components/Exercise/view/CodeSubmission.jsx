@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import "./style/Submission.css";
 import { useAuth } from "../../../Context/AuthContext";
 
@@ -9,42 +9,33 @@ export function CodeSubmission({ problemId }) {
     const [submissionStatus, setSubmissionStatus] = useState(null);
     const { user } = useAuth();
 
-    const programmingLanguages = [
+    const programmingLanguages = useMemo(() => [
         { value: "cpp", label: "C++" },
         { value: "java", label: "Java" },
         { value: "python", label: "Python" },
         { value: "node", label: "node" },
-    ];
+    ], []);
 
-    const handleLanguageChange = (e) => {
-        console.log("Language changed to:", e.target.value);
+    const handleLanguageChange = useCallback((e) => {
         setSelectedLanguage(e.target.value);
-    };
+    }, []);
 
-    const handleCodeChange = (e) => {
-        console.log("Code updated, length:", e.target.value.length);
+    const handleCodeChange = useCallback((e) => {
         setCode(e.target.value);
-    };
+    }, []);
 
-    const handleFileUpload = (e) => {
+    const handleFileUpload = useCallback((e) => {
         const uploadedFile = e.target.files[0];
-        console.log("File uploaded:", {
-            name: uploadedFile?.name,
-            size: uploadedFile?.size,
-            type: uploadedFile?.type
-        });
         setFile(uploadedFile);
-    };
+    }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
-        console.log("Submit initiated", {
-            userId: user.id,
-            problemId,
-            language: selectedLanguage,
-            hasFile: !!file,
-            codeLength: code.length
-        });
+
+        if (!user?.id || !problemId) {
+            setSubmissionStatus("Error: User or problem ID missing");
+            return;
+        }
 
         const formData = new FormData();
         formData.append("user_id", user.id);
@@ -52,39 +43,26 @@ export function CodeSubmission({ problemId }) {
         formData.append("lang", selectedLanguage);
 
         if (file) {
-            console.log("Submitting with file:", file.name);
             formData.append("source", file);
         } else if (code && code.trim() !== "") {
-            console.log("Submitting with code editor content");
             const blob = new Blob([code], { type: "text/plain" });
             const filename = `${problemId}.${selectedLanguage}.txt`;
             formData.append("source", blob, filename);
-            console.log("Created blob:", { size: blob.size, filename });
         } else {
             setSubmissionStatus("Please provide code or upload a file.");
-            console.error("No code or file provided for submission.");
-            setTimeout(() => setSubmissionStatus(null), 5000);
             return;
         }
 
         try {
-            console.log("Sending request to server...");
             setSubmissionStatus("Submitting...");
             const response = await fetch("http://localhost:8080/submission/", {
                 method: "POST",
                 body: formData,
             });
 
-            console.log("Response received:", {
-                status: response.status,
-                statusText: response.statusText
-            });
-
             if (response.ok) {
                 const responseData = await response.json();
-                console.log("Submission successful, server response:", responseData);
                 
-                // Set feedback based on veredict
                 switch (responseData.veredict) {
                     case "AC":
                         setSubmissionStatus("Accepted! Your solution is correct.");
@@ -98,28 +76,23 @@ export function CodeSubmission({ problemId }) {
                 
                 setCode("");
                 setFile(null);
-                
-                setTimeout(() => setSubmissionStatus(null), 5000);
             } else {
                 const errorText = await response.text();
-                console.log("Submission failed:", {
-                    status: response.status,
-                    error: errorText
-                });
                 setSubmissionStatus("Submission failed. Please try again.");
             }
         } catch (error) {
             console.error("Submission error:", error.message);
             setSubmissionStatus("Error: Could not connect to server.");
         }
-    };
+    }, [user, problemId, selectedLanguage, code, file]);
 
-    console.log("Component render", { 
-        selectedLanguage, 
-        codeLength: code.length, 
-        file: !!file, 
-        submissionStatus 
-    });
+    const lineNumbers = useMemo(() => 
+        Array.from({ length: code.split("\n").length || 1 }, (_, i) => (
+            <span key={i}>{i + 1}</span>
+        ))
+    , [code]);
+
+    console.log("CodeSubmission render");
 
     return (
         <div className="dou-submission-content">
@@ -154,9 +127,7 @@ export function CodeSubmission({ problemId }) {
                     rows={15}
                 />
                 <div className="line-numbers">
-                    {Array.from({ length: code.split("\n").length || 1 }, (_, i) => (
-                        <span key={i}>{i + 1}</span>
-                    ))}
+                    {lineNumbers}
                 </div>
             </div>
 
@@ -164,7 +135,6 @@ export function CodeSubmission({ problemId }) {
                 Submit Code
             </button>
 
-            {/* Feedback Display */}
             {submissionStatus && (
                 <div className={`submission-feedback ${
                     submissionStatus.includes("Accepted") ? "success" : 
