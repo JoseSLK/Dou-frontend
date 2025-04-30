@@ -9,6 +9,8 @@ import { useAuth } from "../Context/AuthContext";
 import { EducationContent } from "../components/Education_content";
 import { About } from "../components/about";
 import { Exercise } from "../components/Exercise";
+import { ExerciseView } from "../components/Exercise/view/ExerciseView";
+import { Profile } from "../components/Profile";
 
 export function AppRoutes () {
     const navigate = useNavigate();
@@ -48,7 +50,9 @@ export function AppRoutes () {
                 {/* Luego del login */}
                 <Route path="/Dou-frontend/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
                     <Route path="education" element={<EducationContent/>} />
-                    <Route path="exercises" element={<Exercise />} />
+                    <Route path="exercises" element={<Exercise />}/>
+                    <Route path="exercises/:problemId" element={<Exercise initialTab="search" />} />
+                    <Route path="profile" element={<Profile/>}/>
                 </Route>
 
                 <Route path="/Dou-frontend/about" element={<About />} />

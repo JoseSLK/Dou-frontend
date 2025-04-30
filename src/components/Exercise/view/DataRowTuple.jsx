@@ -1,5 +1,6 @@
 import React from "react";
 import "./style/DataRowTuple.css";
+import { Link } from "react-router-dom";
 
 export function DataRowTuple({ exercise, onSelect, isSelected }) {
 
@@ -14,10 +15,10 @@ export function DataRowTuple({ exercise, onSelect, isSelected }) {
     return (
     
         <div className={tupleClassName} onClick={handleClick}>
-            
-            <span className="dou-tuple-id">ID: {problem_id}</span>
-            <span className="dou-tuple-name">{problem_name}</span>
-            
+            <Link to={`/Dou-frontend/dashboard/exercises/${exercise.problem_id}`}>
+                <span className="dou-tuple-id">ID: {problem_id}</span>
+                <span className="dou-tuple-name">{problem_name}</span>
+            </Link>
         </div>
     );
 }

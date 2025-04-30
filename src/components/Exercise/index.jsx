@@ -36,10 +36,10 @@ export function Exercise( { initialTab= "" } ){
                     ) : status === "search"? (
                         <ExerciseView initialProblemId={problemId} />
                     ) : (
-                        <div class="presentacion-container">
+                        <div className="presentacion-container">
                             <h2>Presentación de Ejercicios</h2>
-                            <p><span class="highlight">¡Bienvenido!</span> Aquí puedes gestionar tus ejercicios de programación competitiva.</p>
-                            <p>Por favor, selecciona una acción para continuar: <span class="highlight">Crear</span> un nuevo desafío o <span class="highlight">Buscar</span> uno ya existente.</p>
+                            <p><span className="highlight">¡Bienvenido!</span> Aquí puedes gestionar tus ejercicios de programación competitiva.</p>
+                            <p>Por favor, selecciona una acción para continuar: <span className="highlight">Crear</span> un nuevo desafío o <span className="highlight">Buscar</span> uno ya existente.</p>
                             <p>Recuerda que cada ejercicio es una oportunidad para mejorar tus habilidades y avanzar en el ranking. 💪</p>
                         </div>
                     )

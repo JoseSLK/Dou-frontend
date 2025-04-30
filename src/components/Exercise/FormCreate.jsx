@@ -1,24 +1,19 @@
 import React, {useState} from "react";
 import "../Exercise/FormCreate.css"
+import { useExercise } from "../../Context/ExerciseContext";
 
 export function FormCreate() {
     const [title, setTitle] = useState(""); 
     const [memory, setMemory] = useState(""); 
     const [time, setTime] = useState("");    
-    const [file, setFile] =     useState(null);   
+    const [file, setFile] = useState(null);   
     const [error, setError] = useState("");   
     const [ok, setOk] = useState(false);
+    const { fetchExercises } = useExercise();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setError(""); 
-
-        
-        console.log("Datos listos para manipular:");
-        console.log("Título:", title); 
-        console.log("Memoria (MB):", memory); 
-        console.log("Tiempo (ms):", time);     
-        console.log("Archivo:", file);      
 
         if (!title || !memory || !time || !file) {
             setError("Todos los campos son obligatorios, incluyendo el archivo.");
@@ -37,40 +32,47 @@ export function FormCreate() {
 
         const formData = new FormData();
         formData.append('name', title);
-        console.log("formData después de 'name':", formData.get('name'));
         formData.append('m_limit', parseInt(memory, 10));
-        console.log("formData después de 'm_limit':", formData.get('m_limit'));
         formData.append('t_limit', parseInt(time, 10));
-        console.log("formData después de 't_limit':", formData.get('t_limit'));
         formData.append('zip', file);
-        console.log("formData después de 'zip':", formData.get('zip'));
-        console.log("FormData listo para enviar:", formData);
 
-        console.log("FormData listo para enviar:", formData);
+        try {
+            const response = await fetch('http://localhost:8080/problem/', { 
+                method: 'POST', 
+                mode: 'cors',
+                credentials: 'include',
+                body: formData 
+            });
 
-        fetch('http://localhost:8080/problem/', { 
-            method: 'POST', 
-            mode: 'cors',
-            credentials: 'include',
-            body: formData 
-        })
-        .then(response => response.json())
-        .then(data => { 
+            if (!response.ok) {
+                throw new Error('Error al crear el ejercicio');
+            }
+
+            const data = await response.json();
             console.log('Éxito:', data); 
             setOk(true);
-            setError("Se ha creado el ejercicio, puedes visitar la seccion buscar para verlo");
+            setError("Se ha creado el ejercicio, puedes visitar la sección buscar para verlo");
+
+            // Actualizar la lista de ejercicios
+            await fetchExercises();
 
             setTimeout(() => {
                 setOk(false);
                 setError("");
             }, 5000);
-        })
-        .catch(error => { console.error('Error:', error); setError('Error al crear el ejercicio.'); });
-        setTitle(''); setMemory(''); setTime(''); setFile(null); event.target.reset(); 
+        } catch (error) {
+            console.error('Error:', error);
+            setError('Error al crear el ejercicio.');
+        }
+
+        setTitle('');
+        setMemory('');
+        setTime('');
+        setFile(null);
+        event.target.reset();
     };
  
     const handleFileChange = (event) => {
-
         const selectedFile = event.target.files[0]; 
         if (selectedFile) {
             setFile(selectedFile); 
@@ -81,9 +83,7 @@ export function FormCreate() {
     };
     
     return (
-            
         <div className="dou-exercises-create">
-
             <div className="dou-form-container">
                 <form className="dou-form-ex-c" onSubmit={handleSubmit} noValidate>
                     {error && <p className={`dou-form-error ${ok? 'ok' : ''}`}>{error}</p>}
@@ -117,11 +117,10 @@ export function FormCreate() {
                                 required
                             />
                         </div>
-
-                        <div className="form-group form-group-half"> 
+                        <div className="form-group form-group-half">
                             <label htmlFor="timeLimit">Tiempo (ms):</label>
                             <input
-                                className="dou-input" 
+                                className="dou-input"
                                 type="number"
                                 id="timeLimit"
                                 name="time"
@@ -134,19 +133,17 @@ export function FormCreate() {
                         </div>
                     </div>
 
-                    {/* Grupo Archivo */}
                     <div className="form-group">
-                        <label htmlFor="zipFile">Archivo de Casos (.zip):</label>
+                        <label htmlFor="exerciseFile">Archivo ZIP:</label>
                         <input
-                            className="dou-input-file" 
+                            className="dou-input"
                             type="file"
-                            id="zipFile"
+                            id="exerciseFile"
                             name="file"
                             accept=".zip"
                             onChange={handleFileChange}
                             required
                         />
-                        {file && <span className="dou-file-name">Seleccionado: {file.name}</span>}
                     </div>
 
                     <button type="submit" className="dou-button-submit">

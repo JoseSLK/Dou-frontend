@@ -1,49 +1,11 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { DataRowTuple } from "./DataRowTuple";
 import "./style/ExercisePicker.css";
+import { useExercise } from "../../../Context/ExerciseContext";
 
 export function ExercisePicker({ onExerciseSelected, selectedExerciseId }) {
-    const [exercises, setExercises] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        setLoading(true);
-        setError(null);
-
-        const fetchExercises = async () => {
-            try {
-                const response = await fetch("http://localhost:8080/problem/", {
-                    method: "GET",
-                    mode: "cors",
-                    credentials: "include",
-                });
-
-                if (!response.ok) {
-                    const errorMsg = `Error ${response.status}: ${response.statusText}`;
-                    throw new Error(errorMsg);
-                }
-
-                const data = await response.json();
-                if (Array.isArray(data)) {
-                    setExercises(data);
-                } else {
-                    console.warn("La respuesta no es un array:", data);
-                    setExercises([]);
-                    throw new Error("Formato de datos inesperado recibido del servidor.");
-                }
-            } catch (err) {
-                console.error("Error en fetchExercises:", err);
-                setError(err.message || "Error al cargar ejercicios");
-                setExercises([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchExercises();
-    }, []);
+    const { exercises, loading, error } = useExercise();
 
     const filteredExercises = useMemo(() => {
         if (!searchTerm) return exercises;
