@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 const ExerciseContext = createContext();
 
@@ -8,7 +8,7 @@ export function ExerciseProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchExercises = async () => {
+    const fetchExercises = useCallback(async () => {
         setLoading(true);
         setError(null);
 
@@ -40,9 +40,9 @@ export function ExerciseProvider({ children }) {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
-    const fetchExerciseById = async (problemId) => {
+    const fetchExerciseById = useCallback(async (problemId) => {
         if (!problemId) return;
 
         try {
@@ -61,26 +61,28 @@ export function ExerciseProvider({ children }) {
         } catch (error) {
             console.error("Error fetching exercise data:", error);
         }
-    };
+    }, []);
 
-    const selectExercise = (exercise) => {
+    const selectExercise = useCallback((exercise) => {
         setSelectedExercise(exercise);
-    };
+    }, []);
 
     useEffect(() => {
         fetchExercises();
-    }, []);
+    }, [fetchExercises]);
+
+    const value = useMemo(() => ({
+        exercises,
+        selectedExercise,
+        loading,
+        error,
+        fetchExercises,
+        fetchExerciseById,
+        selectExercise
+    }), [exercises, selectedExercise, loading, error, fetchExercises, fetchExerciseById, selectExercise]);
 
     return (
-        <ExerciseContext.Provider value={{
-            exercises,
-            selectedExercise,
-            loading,
-            error,
-            fetchExercises,
-            fetchExerciseById,
-            selectExercise
-        }}>
+        <ExerciseContext.Provider value={value}>
             {children}
         </ExerciseContext.Provider>
     );
