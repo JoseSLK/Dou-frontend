@@ -25,7 +25,7 @@ export function SubmissionList({ problemId }) {
     useRenderCount('SubmissionList');
 
     const fetchSubmissions = useCallback(async () => {
-        if (!user?.id || !problemId) {
+        if (!user?.id) {
             setLoading(false);
             return;
         }
@@ -33,19 +33,27 @@ export function SubmissionList({ problemId }) {
         try {
             setLoading(true);
             setError(null);
-            
-            const requestBody = {
-                user_id: user.id,
-                problem_id: problemId
-            };
 
-            const response = await fetch("http://localhost:8080/submission/attemps", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(requestBody),
-            });
+            let response;
+            
+            if (problemId) {
+                const requestBody = {
+                    user_id: user.id,
+                    problem_id: problemId
+                };
+                
+                response = await fetch("http://localhost:8080/submission/attemps", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(requestBody),
+                });
+            } else {
+                response = await fetch(`http://localhost:8080/submission/user/${user.id}`, {
+                    method: "GET"
+                });
+            }
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

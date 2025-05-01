@@ -44,6 +44,9 @@ export function Header () {
         await logout();
         navigate("/Dou-frontend/login");
     }
+    const handleProfileClick = () => {
+        navigate("/Dou-frontend/dashboard/profile");
+    }
 
     const handleMainClick = () => {
         window.location.reload();
@@ -70,6 +73,7 @@ export function Header () {
                             {isDropdownVisible && (
                                 <div className={`dropdown ${isDropdownOpen ? "open" : ""}`}>
                                     <button onClick={handleLogout}>Cerrar sesión</button>
+                                    <button onClick={handleProfileClick}>Perfil</button>
                                 </div>
                             )}
                         </div>
