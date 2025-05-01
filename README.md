@@ -1,25 +1,75 @@
-# Dou-frontend 🦜
+# DOU - Plataforma de Entrenamiento en Programación Competitiva 🦜
 
-Bienvenido al corazón visual de **DOU** (Plataforma de entrenamiento de programación competitiva).
+## ⚠️ Importante
+Este repositorio contiene únicamente el frontend de la plataforma DOU. Para que funcione correctamente, es necesario tener el backend en ejecución. El frontend está diseñado para trabajar en conjunto con el backend desarrollado en Rust, por lo que su funcionalidad estará limitada sin él.
 
-**DOU** es una iniciativa ideada y desarrollada por:
-- **Nicolás Sarmiento**
-- **Nicolás Tinjaca**
-- **José Salamanca**
+## Descripción
+DOU es una plataforma educativa especializada en programación competitiva, diseñada para ayudar a estudiantes y entusiastas a desarrollar sus habilidades de programación. La plataforma ofrece un entorno interactivo y desafiante donde los usuarios pueden practicar, competir y mejorar sus habilidades de resolución de problemas algorítmicos.
 
-Estudiantes de la **UPTC** en la carrera de **Ingeniería de Sistemas**. El objetivo de **DOU** es ofrecer a toda la comunidad estudiantil una herramienta excelente para el desarrollo de habilidades como programador. Se enfoca en una rama de la programación: **Competitive Programming**. Aunque también se puede usar para aprender programación en general.
+## Características Principales
+- **Sistema de Prácticas**: Ejercicios estructurados por niveles de dificultad
+- **Contests**: Competencias programadas con ranking y seguimiento de progreso
+- **Tutoriales Interactivos**: Material educativo detallado sobre algoritmos y estructuras de datos
+- **Sistema de Envíos**: Evaluación en tiempo real de soluciones
+- **Perfil de Usuario**: Seguimiento de progreso y estadísticas de rendimiento
+- **Comunidad**: Interacción entre usuarios y discusión de soluciones
 
-El proyecto está dividido en `n` número de partes. Prácticas y Contests, Tutorials, Clases, etc.
+## Tecnologías
+### Frontend
+- **React**: Biblioteca principal para la interfaz de usuario
+- **Vite**: Bundler y herramienta de desarrollo
+- **CSS**: Estilos y diseño responsivo
+- **JavaScript**: Lógica de la aplicación
 
-Este repositorio está enfocado netamente en el ámbito visual de la plataforma, es decir, el **frontend**:
-- Interfaz de usuario
-- Integración con backend
-- ...
+### Backend
+- **Rust**: Lenguaje de programación principal
+- **PostgreSQL**: Base de datos relacional
+- **JWT**: Autenticación y autorización
+
+## Equipo de Desarrollo
+DOU es desarrollado por estudiantes de Ingeniería de Sistemas de la Universidad Pedagógica y Tecnológica de Colombia (UPTC):
+
+- **Nicolás Sarmiento** - Backend
+- **Nicolás Tinjaca** - Backend
+- **José Salamanca** - Frontend
+
+## Instalación
+1. Clonar el repositorio:
+```bash
+git clone https://github.com/your-username/dou-frontend.git
+cd dou-frontend
+```
+
+2. Instalar dependencias:
+```bash
+npm install
+```
+
+3. Configurar variables de entorno:
+```bash
+cp .env.example .env
+# Editar .env con tus configuraciones
+```
+
+4. Iniciar el servidor de desarrollo:
+```bash
+npm run dev
+```
+
+## Estructura del Proyecto
+```
+dou-frontend/
+├── src/
+│   ├── components/     # Componentes React reutilizables
+│   ├── pages/         # Páginas principales
+│   ├── context/       # Contextos de React
+│   ├── hooks/         # Hooks personalizados
+│   ├── services/      # Servicios y llamadas API
+│   └── styles/        # Estilos globales
+├── public/            # Archivos estáticos
+└── tests/             # Pruebas unitarias y de integración
+```
 
 ---
 
-## Tecnologías usadas
-- React
-- CSS
-- Vite
-- JS
+**DOU** - Transformando el aprendizaje de programación competitiva 🚀
