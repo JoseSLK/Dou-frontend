@@ -36,7 +36,7 @@ DOU es desarrollado por estudiantes de Ingeniería de Sistemas de la Universidad
 ## Instalación
 1. Clonar el repositorio:
 ```bash
-git clone https://github.com/your-username/dou-frontend.git
+git clone https://github.com/JoseSLK/dou-frontend.git
 cd dou-frontend
 ```
 
