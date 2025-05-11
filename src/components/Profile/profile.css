@@ -1,0 +1,158 @@
+/* Estilos para el componente Profile */
+
+.dou-profile {
+    display: grid;
+    grid-template-columns: 2fr 3fr; /* 2 fracciones para info, 3 fracciones para submissions */
+    width: 100%; /* Ajuste al 100% de ancho */
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    padding: 20px;
+}
+
+.dou-profile__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+}
+
+.dou-profile__info__avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.dou-profile__info__avatar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f0f0f0;
+}
+
+.dou-profile__info__details {
+    text-align: center;
+}
+
+.dou-profile__info__details h2 {
+    margin-bottom: 10px;
+}
+
+.dou-profile__info__details p {
+    color: #666;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dou-profile__submissions {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    min-height: 200px; /* Para que se vea el área incluso sin contenido */
+}
+
+.dou-profile__submissions h3 {
+    margin-bottom: 10px;
+    text-align: center;
+    color: #B5E2F2;
+}
+
+.dou-profile__actions {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.dou-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.dou-button--primary {
+    background-color: #B5E2F2;
+    color: black;
+}
+
+.dou-button--primary:hover {
+    background-color: #75c3df;
+}
+
+.dou-button--danger {
+    background-color: #f44336;
+    color: black;
+}
+
+.dou-button--danger:hover {
+    background-color: #da190b;
+}
+
+.dou-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dou-modal {
+    background-color: transparent;
+    border: 1px solid #e0e0e0;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dou-form-group {
+    margin-bottom: 1rem;
+}
+
+.dou-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.dou-form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.dou-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.dou-error {
+    color: #f44336;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: #ffebee;
+    border-radius: 4px;
+}
+
+  /* Estilos responsivos para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .dou-profile {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+}
