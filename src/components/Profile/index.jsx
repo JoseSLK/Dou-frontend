@@ -118,26 +118,37 @@ const EditProfileModal = ({ isOpen, onClose, onSave, username }) => {
 export function Profile() {
     const { user, logout } = useAuth();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [error, setError] = useState("");
+    const [message, setMessage] = useState({ text: "", type: "" }); // Modificamos el estado
 
     const handleEditProfile = async (formData) => {
         try {
+            setMessage({ text: "", type: "" }); // Limpiamos el mensaje
+            const rolep = user.role == 'STUDENT'? 1 : 2;
+            const bodyData = {
+                username: formData.username,
+                user_password: formData.currentPassword,
+                user_email: user.email,
+                user_role: rolep
+            };
+
             // Primera petición: Actualizar información del usuario
             const updateUserResponse = await fetch(`http://localhost:8080/user/${user.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    username: formData.username,
-                    user_password: formData.currentPassword,
-                    user_email: user.email,
-                    user_role: user.role
-                }),
+                body: JSON.stringify(bodyData),
             });
 
             if (!updateUserResponse.ok) {
-                throw new Error("Error al actualizar el perfil");
+                let errorMessage = "Error al actualizar el perfil";
+                try {
+                    const errorData = await updateUserResponse.text();
+                    errorMessage = errorData || errorMessage;
+                } catch (e) {
+                    console.error("Error al parsear la respuesta:", e);
+                }
+                throw new Error(errorMessage);
             }
 
             // Si existe nueva contraseña, realizar la segunda petición
@@ -155,13 +166,20 @@ export function Profile() {
 
                 if (!updatePasswordResponse.ok) {
                     throw new Error("Error al actualizar la contraseña");
+                }else {
+                    await logout();
                 }
             }
-
-            setIsEditModalOpen(false);
-            window.location.reload();
+            //JUsto aca
+            setMessage({ text: "¡Perfil actualizado exitosamente!", type: "ok" });
+            setTimeout(() => {
+                setMessage({ text: "", type: "" });
+                setIsEditModalOpen(false);
+                window.location.reload();
+            }, 2000);
         } catch (error) {
-            setError(error.message);
+            setMessage({ text: error.message, type: "error" });
+            console.error("Error al actualizar el perfil:", error);
         }
     };
 
@@ -179,7 +197,7 @@ export function Profile() {
                 throw new Error("Error al eliminar la cuenta");
             }
 
-            logout();
+            await logout();
         } catch (error) {
             setError(error.message);
         }
@@ -197,6 +215,11 @@ export function Profile() {
                         {user?.role && <span>{user.role}</span>}
                         {user?.email && <span>{user.email}</span>}
                     </p>
+                    {message.text && (
+                        <div className={`dou-message ${message.type}`}>
+                            {message.text}
+                        </div>
+                    )}
                     <div className="dou-profile__actions">
                         <button 
                             className="dou-button dou-button--primary"
@@ -225,8 +248,6 @@ export function Profile() {
                 onSave={handleEditProfile}
                 username={user?.name || ""}
             />
-
-            {error && <div className="dou-error">{error}</div>}
         </div>
     );
 }
