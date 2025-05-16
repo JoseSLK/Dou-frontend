@@ -42,7 +42,6 @@ export function AuthProvider({ children }) {
 
                 } catch (error) {
                     console.error('Error al cargar el usuario:', error);
-                    // Limpiar datos inválidos
                     localStorage.removeItem("token");
                     localStorage.removeItem("user");
                     setError("Sesion expirada o inválida. Por favor, inicia sesión nuevamente.");
@@ -52,7 +51,8 @@ export function AuthProvider({ children }) {
                     }
                 }
             }  else if (location.pathname !== "/Dou-frontend/login" && 
-                        !location.pathname.includes("/public/")) {
+                       !location.pathname.includes("/public/") &&
+                       !location.pathname.includes("/about")) {
                 navigate("/Dou-frontend/login", { replace: true });
             }
             setLoading(false);

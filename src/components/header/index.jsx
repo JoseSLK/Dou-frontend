@@ -42,14 +42,17 @@ export function Header () {
 
     const handleLogout = async () => {
         await logout();
-        navigate("/Dou-frontend/login");
     }
     const handleProfileClick = () => {
         navigate("/Dou-frontend/dashboard/profile");
     }
 
     const handleMainClick = () => {
-        window.location.reload();
+        if (user) {
+            navigate('/Dou-frontend/dashboard');
+        } else {
+            navigate('/Dou-frontend/login');
+        }
     };
 
     return (
