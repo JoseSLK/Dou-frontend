@@ -1,14 +1,20 @@
 import React, { useEffect, useState  } from "react";
 import "./educationContent.css";
 import { useContent } from "../../Context/ContentContext";
+import { useAuth } from "../../Context/AuthContext";
 import { ArticleItem } from "./ArticleItem";
 import { Article } from "./Article";
+import { EditArticle } from "./EditArticle";
+import { CreateArticle } from "./CreateArticle";
 
 export function EducationContent () {
-    const { content, searchContent, searchArticles } = useContent();
+    const { content, searchContent, searchArticles, selectedMaterial } = useContent();
+    const { user } = useAuth();
     const [searchQuery, setSearchQuery] = useState("");
     const [debouncedTerm, setDebouncedTerm] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [isCreating, setIsCreating] = useState(false);
 
     const handleSearch = async (e) => {
         const term = e.target.value || "";
@@ -17,6 +23,24 @@ export function EducationContent () {
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+    }
+
+    const handleEditClick = () => {
+        setIsEditing(true);
+        setIsCreating(false);
+    }
+
+    const handleCreateClick = () => {
+        setIsCreating(true);
+        setIsEditing(false);
+    }
+
+    const handleCloseEdit = () => {
+        setIsEditing(false);
+    }
+
+    const handleCloseCreate = () => {
+        setIsCreating(false);
     }
 
     useEffect(() => {
@@ -65,7 +89,36 @@ export function EducationContent () {
                 )}
             </div>
             <div className="dou-content">
-                <Article />
+                {isEditing ? (
+                    <EditArticle 
+                        article={selectedMaterial} 
+                        onClose={handleCloseEdit}
+                    />
+                ) : isCreating ? (
+                    <CreateArticle onClose={handleCloseCreate} />
+                ) : (
+                    <>
+                        {user?.role === "PROFESSOR" && (
+                            <div className="action-buttons">
+                                <button 
+                                    className="create-button"
+                                    onClick={handleCreateClick}
+                                >
+                                    Crear
+                                </button>
+                                {selectedMaterial && (
+                                    <button 
+                                        className="edit-button"
+                                        onClick={handleEditClick}
+                                    >
+                                        Editar
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                        <Article />
+                    </>
+                )}
             </div>
         </div>
     );
