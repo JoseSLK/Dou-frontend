@@ -5,13 +5,11 @@
     height: 100%;
     width: 100%;
     gap: 5px;
-
 }
 
 .dou-menu-content {
     box-sizing: border-box;
     grid-column: 1 / 2;
-    /* grid-row: 1 / -1; */
     background-color: #181819;
     height: 100%;
     width: 100%;
@@ -24,14 +22,131 @@
 
 .dou-content {
     grid-column: 2 / 3;
-    /* grid-row: 1 / -1; */
     background-color: #181819;
     height: 100%;
     width: 100%;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent content from overflowing */
 }
 
 .dou-login-input.search {
     height: 38px;
     width: 80%;
+}
+
+.dou-article h1,
+.dou-article h2,
+.dou-article p,
+.dou-article section{
+    font-size: 1.2rem;
+}
+
+/* Article */
+.dou-article {
+    font-size: 1lh;
+    box-sizing: border-box;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    margin: 0 auto;
+}
+
+.article-title {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.article-content {
+    line-height: 1.2;
+    margin-bottom: 30px;
+}
+
+.dou-dw-docs {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: transparent;
+    border-radius: 8px;
+}
+
+.files-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.file-name {
+    font-weight: 500;
+}
+
+.download-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.download-button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .dou-education-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+
+    .dou-menu-content {
+        grid-column: 1;
+        grid-row: 1;
+        height: auto;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .dou-content {
+        grid-column: 1;
+        grid-row: 2;
+    }
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+    display: none;
+    padding: 4px;
+    background: none;
+    border: none;
+    color: #643CFF;
+    cursor: pointer;
+    font-size: 1.4lh;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+        text-align: left;
+    }
+
+    .dou-menu-content {
+        display: none;
+    }
+
+    .dou-menu-content.active {
+        display: flex;
+    }
 }
