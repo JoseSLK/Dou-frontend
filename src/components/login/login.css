@@ -30,16 +30,21 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    width: 100%;
     max-width: 600px;
     transition-duration: 0.3s;
     position: relative;
-    padding: auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .dou-login-form.register {
     gap: 10px;
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .dou-form-row {
@@ -139,12 +144,65 @@
     .dou-form-row {
         flex-direction: column; 
     }
+
+    .dou-login-form.register {
+        padding: 0 10px;
+    }
+
+    .dou-login-container {
+        padding: 10px;
+    }
+
+    .dou-login-input {
+        font-size: 16px;
+    }
+
+    .dou-login-button-submit {
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .dou-dynamic-text {
+        top: 20px;
+        font-size: 0.9rem;
+    }
+
+    .dou-login-form-forgot-password {
+        padding: 0 10px;
+        font-size: 1lh;
+    }
+}
+
+@media (max-width: 400px) {
+    .dou-login-container {
+        padding: 5px;
+    }
+
+    .dou-login-form.register {
+        padding: 0 5px;
+    }
+
+    .dou-login-button-submit {
+        margin: 15px 0;
+    }
 }
 
 .dou-login-error {
     color: #dc3545;
     background-color: #f8d7da;
     border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    text-align: center;
+    max-width: 200px;
+}
+
+.dou-login-success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
     border-radius: 4px;
     padding: 10px;
     margin: 10px 0;

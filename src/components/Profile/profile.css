@@ -50,13 +50,42 @@
 .dou-profile__submissions {
     border: 1px solid #e0e0e0;
     padding: 15px;
-    min-height: 200px; /* Para que se vea el área incluso sin contenido */
+    height: 100%; /* Ajusta al alto del contenedor padre */
+    display: flex;
+    flex-direction: column;
 }
 
 .dou-profile__submissions h3 {
     margin-bottom: 10px;
     text-align: center;
     color: #B5E2F2;
+}
+
+/* Nuevo estilo para el contenedor de la lista de submissions */
+.dou-submissions-list {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0; /* Importante para que el flex funcione correctamente */
+    padding-right: 5px; /* Espacio para la barra de scroll */
+}
+
+/* Estilizar la barra de scroll */
+.dou-submissions-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dou-submissions-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.dou-submissions-list::-webkit-scrollbar-thumb {
+    background: #B5E2F2;
+    border-radius: 4px;
+}
+
+.dou-submissions-list::-webkit-scrollbar-thumb:hover {
+    background: #75c3df;
 }
 
 .dou-profile__actions {
@@ -160,9 +189,16 @@
     border: 1px solid #a5d6a7;
 }
 
-  /* Estilos responsivos para pantallas más pequeñas */
+
 @media (max-width: 768px) {
     .dou-profile {
-        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+        grid-template-columns: 1fr; 
+        height: auto;
+        min-height: 100%; 
+    }
+
+    .dou-profile__submissions {
+        min-height: 300px;
+        max-height: 500px;
     }
 }
