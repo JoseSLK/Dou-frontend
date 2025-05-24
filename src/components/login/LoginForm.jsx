@@ -40,7 +40,6 @@ export function LoginForm ( { onSwitchToRegister, onSwitchToForgotPassword } ) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMensajeError("");
         setLoading(true);
 
         try {
@@ -75,7 +74,7 @@ export function LoginForm ( { onSwitchToRegister, onSwitchToForgotPassword } ) {
                 />
 
                 {messageError && (
-                    <div className="dou-login-error">
+                    <div className="dou-login-error" data-testid="error-message">
                         {messageError}
                     </div>
                 )}

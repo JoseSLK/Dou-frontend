@@ -9,7 +9,6 @@ import { useAuth } from "../Context/AuthContext";
 import { EducationContent } from "../components/Education_content";
 import { About } from "../components/about";
 import { Exercise } from "../components/Exercise";
-import { ExerciseView } from "../components/Exercise/view/ExerciseView";
 import { Profile } from "../components/Profile";
 import { ContentProvider } from "../Context/ContentContext";
 
