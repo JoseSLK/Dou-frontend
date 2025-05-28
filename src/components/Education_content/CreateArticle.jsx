@@ -35,10 +35,14 @@ export function CreateArticle({ onClose }) {
                 formData.append(`file${index + 1}`, file);
             });
 
+            const token = localStorage.getItem("token");
+
             const response = await fetch("http://localhost:8080/material/", {
                 method: "POST",
                 body: formData,
-                credentials: "include"
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             if (!response.ok) {

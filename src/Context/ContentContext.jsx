@@ -19,11 +19,13 @@ export function ContentProvider({ children }) {
         setError(null);
 
         try {
+            const token = localStorage.getItem("token");
             const response = await fetch(`${API_URL}/material/onlyid`,
                 {
                     method: "GET",
-                    mode: "cors",
-                    credentials: "include",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 }
             );
 
@@ -49,11 +51,13 @@ export function ContentProvider({ children }) {
         setError(null);
 
         try {
+            const token = localStorage.getItem("token");
             const response = await fetch(`${API_URL}/material/${materialId}`,
                 {
                     method: "GET",
-                    mode: "cors",
-                    credentials: "include",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 }
             );
 
@@ -94,11 +98,13 @@ export function ContentProvider({ children }) {
         setError(null);
 
         try {
+            const token = localStorage.getItem("token");
             const response = await fetch(`${API_URL}/material/search?q=${encodeURIComponent(searchTerm)}`,
                 {
                     method: "GET",
-                    mode: "cors",
-                    credentials: "include",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 }
             );
 

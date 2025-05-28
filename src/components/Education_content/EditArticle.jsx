@@ -35,10 +35,14 @@ export function EditArticle({ article, onClose }) {
                 formData.append(`file${index + 1}`, file);
             });
 
+            const token = localStorage.getItem("token");
+
             const response = await fetch(`http://localhost:8080/material/${article.material_id}`, {
                 method: "PUT",
                 body: formData,
-                credentials: "include"
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             if (!response.ok) {
@@ -60,9 +64,12 @@ export function EditArticle({ article, onClose }) {
         }
 
         try {
+            const token = localStorage.getItem("token");
             const response = await fetch(`http://localhost:8080/material/${article.material_id}`, {
                 method: "DELETE",
-                credentials: "include"
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             if (!response.ok) {
