@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { SubmissionList } from "../Exercise/view/SubmissionList";
 import "./profile.css";
+import { profileService } from '../../services/profileService';
 
 const EditProfileModal = ({ isOpen, onClose, onSave, username }) => {
     const [formData, setFormData] = useState({
@@ -118,11 +119,11 @@ const EditProfileModal = ({ isOpen, onClose, onSave, username }) => {
 export function Profile() {
     const { user, logout } = useAuth();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [message, setMessage] = useState({ text: "", type: "" }); // Modificamos el estado
+    const [message, setMessage] = useState({ text: "", type: "" });
 
     const handleEditProfile = async (formData) => {
         try {
-            setMessage({ text: "", type: "" }); // Limpiamos el mensaje
+            setMessage({ text: "", type: "" });
             const rolep = user.role == 'STUDENT'? 1 : 2;
             const bodyData = {
                 username: formData.username,
@@ -131,79 +132,31 @@ export function Profile() {
                 user_role: rolep
             };
 
-            // Obtener el token del localStorage
             const storedToken = localStorage.getItem("token");
 
-            // Primera petición: Actualizar información del usuario
-            const updateUserResponse = await fetch(`http://localhost:8080/user/${user.id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${storedToken}`
-                },
-                body: JSON.stringify(bodyData),
-            });
+            // Actualizar perfil
+            await profileService.updateUserProfile(user.id, bodyData, storedToken);
 
-            if (updateUserResponse.status === 401) {
-                throw new Error("Tu contraseña actual es incorrecta, por favor intenta de nuevo");
-            }
-            if (!updateUserResponse.ok) {
-                let errorMessage = "Error al actualizar el perfil";
-                try {
-                    const errorData = await updateUserResponse.text();
-                    errorMessage = errorData || errorMessage;
-                } catch (e) {
-                    console.error("Error al parsear la respuesta:", e);
-                }
-                throw new Error(errorMessage);
-            }
-
-            // Si existe nueva contraseña, realizar la segunda petición
+            // Actualizar contraseña si se proporcionó una nueva
             if (formData.newPassword) {
-                const updatePasswordResponse = await fetch(`http://localhost:8080/user/${user.id}/password`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${storedToken}`
-                    },
-                    body: JSON.stringify({
+                await profileService.updateUserPassword(
+                    user.id,
+                    {
                         current_password: formData.currentPassword,
                         new_password: formData.newPassword
-                    }),
-                });
-
-                if (updatePasswordResponse.status === 401) {
-                    throw new Error("Tu contraseña actual es incorrecta, por favor intenta de nuevo");
-                }
-                if (!updatePasswordResponse.ok) {
-                    let errorMessage = "Error al cambiar la contraseña";
-                    try {
-                        const errorData = await updatePasswordResponse.text();
-                        errorMessage = errorData || errorMessage;
-                    } catch (e) {
-                        console.error("Error al parsear la respuesta:", e);
-                    }
-                    throw new Error(errorMessage);
-                }
-
-                // Mostrar mensaje de éxito
+                    },
+                    storedToken
+                );
                 setMessage({
                     text: "Contraseña actualizada exitosamente",
                     type: "success"
                 });
             }
 
-            // Mostrar mensaje de éxito para el perfil
             setMessage({
                 text: "Perfil actualizado exitosamente",
                 type: "success"
             });
-
-            // Actualizar el estado del usuario
-            // setUser(prev => ({
-            //     ...prev,
-            //     username: formData.username
-            // }));
 
             setIsEditModalOpen(false);
             await logout();
@@ -223,27 +176,7 @@ export function Profile() {
 
         try {
             const storedToken = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:8080/user/${user.id}`, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${storedToken}`
-                }
-            });
-
-            if (response.status === 401) {
-                throw new Error("Tu identidad tiene problemas, por favor intenta iniciar sesión nuevamente");
-            }
-            if (!response.ok) {
-                let errorMessage = "Error al eliminar la cuenta";
-                try {
-                    const errorData = await response.text();
-                    errorMessage = errorData || errorMessage;
-                } catch (e) {
-                    console.error("Error al parsear la respuesta:", e);
-                }
-                throw new Error(errorMessage);
-            }
-
+            await profileService.deleteUserAccount(user.id, storedToken);
             await logout();
         } catch (error) {
             setMessage({

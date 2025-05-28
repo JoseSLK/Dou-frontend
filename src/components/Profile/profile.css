@@ -48,6 +48,7 @@
 }
 
 .dou-profile__submissions {
+    box-sizing: border-box;
     border: 1px solid #e0e0e0;
     padding: 15px;
     height: 100%; /* Ajusta al alto del contenedor padre */
