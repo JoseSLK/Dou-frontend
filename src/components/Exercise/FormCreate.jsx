@@ -84,9 +84,19 @@ export function FormCreate() {
     
     return (
         <div className="dou-exercises-create">
+            <div className="dou-content-guide">
+                <h4>Guía Rápida</h4>
+                <p>
+                    Completa los detalles del nuevo ejercicio. Asegúrate de que el
+                    archivo <strong>.zip</strong> contenga todo lo necesario.
+                </p>
+                <p>Define límites claros de memoria y tiempo para la ejecución.</p>
+                <div className="guide-icon">📄➡️⚙️</div>
+            </div>
+
             <div className="dou-form-container">
                 <form className="dou-form-ex-c" onSubmit={handleSubmit} noValidate>
-                    {error && <p className={`dou-form-error ${ok? 'ok' : ''}`}>{error}</p>}
+                    {error && <p className={`dou-form-error ${ok ? 'ok' : ''}`}>{error}</p>}
 
                     <div className="form-group">
                         <label htmlFor="exerciseTitle">Título del Ejercicio:</label>
@@ -136,30 +146,29 @@ export function FormCreate() {
                     <div className="form-group">
                         <label htmlFor="exerciseFile">Archivo ZIP:</label>
                         <input
-                            className="dou-input"
+                            className="dou-input dou-input-file"
                             type="file"
                             id="exerciseFile"
-                            name="file"
+                            name="zip"
                             accept=".zip"
                             onChange={handleFileChange}
                             required
                         />
+                        {file && (
+                            <div className="dou-file-name">
+                                {file.name}
+                            </div>
+                        )}
                     </div>
 
-                    <button type="submit" className="dou-button-submit">
+                    <button 
+                        type="submit" 
+                        className="dou-button-submit"
+                        disabled={error !== "" && !ok}
+                    >
                         Crear Ejercicio
                     </button>
                 </form>
-            </div>
-
-            <div className="dou-content-guide">
-                <h4>Guía Rápida</h4>
-                <p>
-                    Completa los detalles del nuevo ejercicio. Asegúrate de que el
-                    archivo <strong>.zip</strong> contenga todo lo necesario.
-                </p>
-                <p>Define límites claros de memoria y tiempo para la ejecución.</p>
-                <div className="guide-icon">📄➡️⚙️</div>
             </div>
         </div>
     );

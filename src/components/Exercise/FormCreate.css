@@ -105,7 +105,6 @@
     background-color: #523dc4; 
 }
 
-
 /* --- Nombre del archivo seleccionado --- */
 .dou-file-name {
     font-size: 0.85rem;
@@ -115,7 +114,6 @@
 }
 
 /* --- Botón de Envío --- */
-/* Se mantiene la clase .dou-button-submit */
 .dou-button-submit{
     padding: 8px 15px;
     font-weight: 600;
@@ -151,7 +149,6 @@
     color: #30F284;
 }
 
-
 /* --- Columna de la Guía --- */
 .dou-content-guide {
     flex: 1; 
@@ -184,4 +181,73 @@
     margin-top: 15px;
     opacity: 0.7;
     color: #d8dce0;
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .dou-exercises-create {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .dou-form-row {
+        flex-direction: column;
+    }
+
+    .form-group-half {
+        width: 100%;
+    }
+
+    .dou-button-submit {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .dou-exercises-create {
+        padding: 15px;
+    }
+
+    .dou-form-ex-c {
+        padding: 15px;
+    }
+
+    .dou-content-guide {
+        padding: 15px;
+    }
+
+    .dou-form-row {
+        gap: 10px;
+    }
+
+    .form-group {
+        gap: 4px;
+    }
+}
+
+@media (max-width: 576px) {
+    .dou-exercises-create {
+        padding: 10px;
+    }
+
+    .dou-form-ex-c {
+        padding: 10px;
+    }
+
+    .dou-content-guide {
+        padding: 10px;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .dou-input {
+        font-size: 0.9rem;
+    }
+
+    .dou-button-submit {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
 }
