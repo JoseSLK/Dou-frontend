@@ -36,6 +36,28 @@ export function AuthProvider({ children }) {
                     setUserRole(parsedUser.user_role);
                     setIsLoggedIn(true);
 
+                    // Verificar JWT
+                    const response = await fetch(`${API_URL}/auth/validate`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${storedToken}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        setError("Sesión expirada o inválida. Por favor, inicia sesión nuevamente.");
+                        logout();
+                        return;
+                    }
+
+                    const data = await response.json();
+                    if (!data.valid) {
+                        setError("Sesión expirada o inválida. Por favor, inicia sesión nuevamente.");
+                        logout();
+                        return;
+                    }
+
                     if (location.pathname === "/Dou-frontend/login") {
                             navigate("/Dou-frontend/dashboard", { replace: true });
                     }
@@ -44,7 +66,7 @@ export function AuthProvider({ children }) {
                     console.error('Error al cargar el usuario:', error);
                     localStorage.removeItem("token");
                     localStorage.removeItem("user");
-                    setError("Sesion expirada o inválida. Por favor, inicia sesión nuevamente.");
+                    setError("Sesión expirada o inválida. Por favor, inicia sesión nuevamente.");
 
                     if (location.pathname !== "/Dou-frontend/login") {
                         navigate("/Dou-frontend/login", { replace: true });
