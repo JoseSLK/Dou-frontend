@@ -5,7 +5,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 15px;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .submission-tabs {
@@ -29,48 +33,78 @@
     display: flex;
     gap: 15px;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .language-selector {
-    padding: 5px;
+    padding: 8px 12px;
     font-size: 14px;
+    border: 1px solid #d8dce0;
+    border-radius: 4px;
+    background: transparent;
+    color: #d8dce0;
+    min-width: 120px;
+    max-width: 150px;
 }
 
 .upload-button {
+    box-sizing: border-box;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 8px 15px;
     background: transparent;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    border: 1px solid #d8dce0;
+    border-radius: 4px;
+    color: #d8dce0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 120px;
+    max-width: 150px;
+    font-size: 13px;
+}
+
+.upload-button:hover {
+    border-color: #6852F2;
+    color: #6852F2;
 }
 
 .code-editor-container {
     position: relative;
-    flex-grow: 1;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .code-editor {
-    width: 90%;
-    height: 100%;
-    padding-left: 40px;
+    width: 100%;
+    height: 400px;
+    padding: 15px 15px 15px 40px;
     font-family: monospace;
-    font-size: 14px;
-    border: 1px solid #ccc;
+    font-size: 0.9rem;
+    border: 1px solid #d8dce0;
+    border-radius: 4px;
+    background: transparent;
+    color: #d8dce0;
     resize: none;
+    min-height: 200px;
+    box-sizing: border-box;
 }
 
 .line-numbers {
+    box-sizing: border-box;
     position: absolute;
+    font-size: 1lh;
+    padding-top: 15px;
     left: 0;
     top: 0;
     bottom: 0;
     width: 30px;
     background: transparent;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #d8dce0;
     text-align: right;
-    padding-left: 5px;
-    padding-top: 0px;
-    padding-right: 2px;
     display: flex;
     flex-direction: column;
 }
@@ -82,17 +116,48 @@
 }
 
 .submit-button {
-    padding: 8px 20px;
-    background: #30F284;
+    width: 100%;
+    max-width: 800px;
+    padding: 12px 20px;
+    background: #B5E2F2;
     color: black;
     border: none;
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
-    transition-duration: 0.3s;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .submit-button:hover {
-    background: #9ae0b9;
+    background: #84d1ee;
+    transform: translateY(-1px);
+}
+
+.submission-feedback {
+    width: 100%;
+    max-width: 800px;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.submission-feedback.success {
+    color: #30F284;
+    border: 1px solid #c3e6cb;
+}
+
+.submission-feedback.error {
+    color: #df3838;
+    border: 1px solid #f5c6cb;
+}
+
+.submission-feedback.info {
+    color: #86d6f3;
+    border: 1px solid #b8daff;
 }
 
 /* List exercises */
@@ -100,7 +165,6 @@
     display: flex;
     gap: 20px;
     cursor: pointer;
-    border: 1px solid #ccc;
     justify-content: center;
     border-radius: 4px;
     transition-duration: 0.3s;
@@ -110,6 +174,7 @@
     color: #30F284;
     background-color: rgba(204, 204, 204, 0.2);
 }
+
 .submission-header .submission-title {
     font-size: 16px;
     font-weight: bold;
@@ -132,31 +197,60 @@
     overflow-y: auto; 
     gap: 5px;
 }
+
 .dou-empty {
     min-height: 400px;
     width: 80%;
 }
 
-/* Envio satisfactorio */
+/* Media Queries */
+@media (max-width: 768px) {
+    .dou-submission-content {
+        padding: 15px;
+    }
 
-.submission-feedback {
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
+    .submission-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .language-selector,
+    .upload-button {
+        width: 100%;
+        min-width: auto;
+        max-width: 100%;
+        font-size: 13px;
+    }
+
+    .code-editor {
+        height: 300px;
+        min-height: 150px;
+    }
+
+    .submit-button {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
 }
 
-.submission-feedback.success {
-    color: #30F284;
-    border: 1px solid #c3e6cb;
-}
+@media (max-width: 576px) {
+    .dou-submission-content {
+        padding: 10px;
+    }
 
-.submission-feedback.error {
-    color: #df3838;
-    border: 1px solid #f5c6cb;
-}
+    .code-editor {
+        height: 250px;
+        min-height: 120px;
+    }
 
-.submission-feedback.info {
-    color: #86d6f3;
-    border: 1px solid #b8daff;
+    .line-numbers {
+        box-sizing: border-box; 
+        width: 25px;
+    }
+
+    .submission-feedback {
+        padding: 10px;
+        font-size: 13px;
+    }
 }

@@ -8,7 +8,7 @@ export function SubmissionArea({ problemId }) {
     const [activeTab, setActiveTab] = useState("submission");
 
     return (
-        <div className="dou-submission-content">
+        <>
             <div className="submission-tabs">
                 <button 
                     className={activeTab === "submission" ? "active-tab" : ""}
@@ -29,6 +29,6 @@ export function SubmissionArea({ problemId }) {
             ) : (
                 <SubmissionList problemId={problemId}/>
             )}
-        </div>
+        </>
     );
 }
