@@ -74,7 +74,9 @@ export function AuthProvider({ children }) {
                 }
             }  else if (location.pathname !== "/Dou-frontend/login" && 
                        !location.pathname.includes("/public/") &&
-                       !location.pathname.includes("/about")) {
+                       !location.pathname.includes("/about") &&
+                       !location.pathname.includes("/register") && 
+                       !location.pathname.includes("/forgot-password")) {
                 navigate("/Dou-frontend/login", { replace: true });
             }
             setLoading(false);
