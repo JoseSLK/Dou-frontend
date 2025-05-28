@@ -131,15 +131,22 @@ export function Profile() {
                 user_role: rolep
             };
 
+            // Obtener el token del localStorage
+            const storedToken = localStorage.getItem("token");
+
             // Primera petición: Actualizar información del usuario
             const updateUserResponse = await fetch(`http://localhost:8080/user/${user.id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${storedToken}`
                 },
                 body: JSON.stringify(bodyData),
             });
 
+            if (updateUserResponse.status === 401) {
+                throw new Error("Tu contraseña actual es incorrecta, por favor intenta de nuevo");
+            }
             if (!updateUserResponse.ok) {
                 let errorMessage = "Error al actualizar el perfil";
                 try {
@@ -157,6 +164,7 @@ export function Profile() {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${storedToken}`
                     },
                     body: JSON.stringify({
                         current_password: formData.currentPassword,
@@ -164,22 +172,47 @@ export function Profile() {
                     }),
                 });
 
-                if (!updatePasswordResponse.ok) {
-                    throw new Error("Error al actualizar la contraseña");
-                }else {
-                    await logout();
+                if (updatePasswordResponse.status === 401) {
+                    throw new Error("Tu contraseña actual es incorrecta, por favor intenta de nuevo");
                 }
+                if (!updatePasswordResponse.ok) {
+                    let errorMessage = "Error al cambiar la contraseña";
+                    try {
+                        const errorData = await updatePasswordResponse.text();
+                        errorMessage = errorData || errorMessage;
+                    } catch (e) {
+                        console.error("Error al parsear la respuesta:", e);
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                // Mostrar mensaje de éxito
+                setMessage({
+                    text: "Contraseña actualizada exitosamente",
+                    type: "success"
+                });
             }
-            //JUsto aca
-            setMessage({ text: "¡Perfil actualizado exitosamente!", type: "ok" });
-            setTimeout(() => {
-                setMessage({ text: "", type: "" });
-                setIsEditModalOpen(false);
-                window.location.reload();
-            }, 2000);
+
+            // Mostrar mensaje de éxito para el perfil
+            setMessage({
+                text: "Perfil actualizado exitosamente",
+                type: "success"
+            });
+
+            // Actualizar el estado del usuario
+            // setUser(prev => ({
+            //     ...prev,
+            //     username: formData.username
+            // }));
+
+            setIsEditModalOpen(false);
+            await logout();
+            window.location.reload();
         } catch (error) {
-            setMessage({ text: error.message, type: "error" });
-            console.error("Error al actualizar el perfil:", error);
+            setMessage({
+                text: error.message,
+                type: "error"
+            });
         }
     };
 
@@ -189,17 +222,34 @@ export function Profile() {
         }
 
         try {
+            const storedToken = localStorage.getItem("token");
             const response = await fetch(`http://localhost:8080/user/${user.id}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${storedToken}`
+                }
             });
 
+            if (response.status === 401) {
+                throw new Error("Tu identidad tiene problemas, por favor intenta iniciar sesión nuevamente");
+            }
             if (!response.ok) {
-                throw new Error("Error al eliminar la cuenta");
+                let errorMessage = "Error al eliminar la cuenta";
+                try {
+                    const errorData = await response.text();
+                    errorMessage = errorData || errorMessage;
+                } catch (e) {
+                    console.error("Error al parsear la respuesta:", e);
+                }
+                throw new Error(errorMessage);
             }
 
             await logout();
         } catch (error) {
-            setError(error.message);
+            setMessage({
+                text: error.message,
+                type: "error"
+            });
         }
     };
     
