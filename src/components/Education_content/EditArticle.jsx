@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useContent } from "../../Context/ContentContext";
 import { useAuth } from "../../Context/AuthContext";
+import { materialService } from '../../services/materialService';
 
 export function EditArticle({ article, onClose }) {
     const { user } = useAuth();
@@ -25,30 +26,7 @@ export function EditArticle({ article, onClose }) {
 
     const handleEdit = async () => {
         try {
-            const formData = new FormData();
-            
-            if (descriptionFile) {
-                formData.append("description", descriptionFile);
-            }
-            
-            attachments.forEach((file, index) => {
-                formData.append(`file${index + 1}`, file);
-            });
-
-            const token = localStorage.getItem("token");
-
-            const response = await fetch(`http://localhost:8080/material/${article.material_id}`, {
-                method: "PUT",
-                body: formData,
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error("Error al actualizar el artículo");
-            }
-
+            await materialService.updateMaterial(article.material_id, descriptionFile, attachments);
             setSuccess("Artículo actualizado exitosamente");
             setTimeout(() => {
                 onClose();
@@ -64,18 +42,7 @@ export function EditArticle({ article, onClose }) {
         }
 
         try {
-            const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:8080/material/${article.material_id}`, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error("Error al eliminar el artículo");
-            }
-
+            await materialService.deleteMaterial(article.material_id);
             setSuccess("Artículo eliminado exitosamente");
             setTimeout(() => {
                 onClose();
@@ -134,4 +101,4 @@ export function EditArticle({ article, onClose }) {
             </div>
         </div>
     );
-} 
+}

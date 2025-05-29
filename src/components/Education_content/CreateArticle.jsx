@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
+import { materialService } from '../../services/materialService';
 
 export function CreateArticle({ onClose }) {
     const { user } = useAuth();
@@ -28,27 +29,7 @@ export function CreateArticle({ onClose }) {
         }
 
         try {
-            const formData = new FormData();
-            formData.append("description", descriptionFile);
-            
-            attachments.forEach((file, index) => {
-                formData.append(`file${index + 1}`, file);
-            });
-
-            const token = localStorage.getItem("token");
-
-            const response = await fetch("http://localhost:8080/material/", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error("Error al crear el artículo");
-            }
-
+            await materialService.createMaterial(descriptionFile, attachments);
             setSuccess("Artículo creado exitosamente");
             setTimeout(() => {
                 onClose();
@@ -94,4 +75,4 @@ export function CreateArticle({ onClose }) {
             </div>
         </div>
     );
-} 
+}
