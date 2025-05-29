@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import { exerciseService } from '../services/exerciseService';
 
 const ExerciseContext = createContext();
 
@@ -13,26 +14,9 @@ export function ExerciseProvider({ children }) {
         setError(null);
 
         try {
-            const response = await fetch("http://localhost:8080/problem/", {
-                method: "GET",
-                mode: "cors",
-                credentials: "include",
-            });
-
-            if (!response.ok) {
-                const errorMsg = `Error ${response.status}: ${response.statusText}`;
-                throw new Error(errorMsg);
-            }
-
-            const data = await response.json();
+            const data = await exerciseService.getAllExercises();
             console.log("Ejercicios recibidos");
-            if (Array.isArray(data)) {
-                setExercises(data);
-            } else {
-                console.warn("La respuesta no es un array:", data);
-                setExercises([]);
-                throw new Error("Formato de datos inesperado recibido del servidor.");
-            }
+            setExercises(data);
         } catch (err) {
             console.error("Error en fetchExercises:", err);
             setError(err.message || "Error al cargar ejercicios");
@@ -46,17 +30,7 @@ export function ExerciseProvider({ children }) {
         if (!problemId) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/problem/${problemId}`, {
-                method: "GET",
-                mode: "cors",
-                credentials: "include",
-            });
-
-            if (!response.ok) {
-                throw new Error("Error fetching exercise data");
-            }
-
-            const data = await response.json();
+            const data = await exerciseService.getExerciseById(problemId);
             setSelectedExercise(data);
         } catch (error) {
             console.error("Error fetching exercise data:", error);
@@ -94,4 +68,4 @@ export function useExercise() {
         throw new Error('useExercise must be used within an ExerciseProvider');
     }
     return context;
-} 
+}
