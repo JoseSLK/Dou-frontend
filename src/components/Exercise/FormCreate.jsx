@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import "../Exercise/FormCreate.css"
 import { useExercise } from "../../Context/ExerciseContext";
+import { exerciseService } from '../../services/exerciseService';
 
 export function FormCreate() {
     const [title, setTitle] = useState(""); 
@@ -37,19 +38,7 @@ export function FormCreate() {
         formData.append('zip', file);
 
         try {
-            const response = await fetch('http://localhost:8080/problem/', { 
-                method: 'POST', 
-                mode: 'cors',
-                credentials: 'include',
-                body: formData 
-            });
-
-            if (!response.ok) {
-                throw new Error('Error al crear el ejercicio');
-            }
-
-            const data = await response.json();
-            console.log('Éxito:', data); 
+            await exerciseService.createProblem(formData);
             setOk(true);
             setError("Se ha creado el ejercicio, puedes visitar la sección buscar para verlo");
 

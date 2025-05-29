@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo } from "react";
 import "./style/Submission.css";
 import { useAuth } from "../../../Context/AuthContext";
+import { submissionService } from '../../../services/submissionService';
 
 export function CodeSubmission({ problemId }) {
     const [selectedLanguage, setSelectedLanguage] = useState("cpp");
@@ -55,31 +56,21 @@ export function CodeSubmission({ problemId }) {
 
         try {
             setSubmissionStatus("Submitting...");
-            const response = await fetch("http://localhost:8080/submission/", {
-                method: "POST",
-                body: formData,
-            });
-
-            if (response.ok) {
-                const responseData = await response.json();
-                
-                switch (responseData.veredict) {
-                    case "AC":
-                        setSubmissionStatus("Accepted! Your solution is correct.");
-                        break;
-                    case "CE":
-                        setSubmissionStatus("Compile Error: Please check your code syntax.");
-                        break;
-                    default:
-                        setSubmissionStatus(`Submission received. Veredict: ${responseData.veredict}`);
-                }
-                
-                setCode("");
-                setFile(null);
-            } else {
-                const errorText = await response.text();
-                setSubmissionStatus("Submission failed. Please try again.");
+            const responseData = await submissionService.submitCode(formData);
+            
+            switch (responseData.veredict) {
+                case "AC":
+                    setSubmissionStatus("Accepted! Your solution is correct.");
+                    break;
+                case "CE":
+                    setSubmissionStatus("Compile Error: Please check your code syntax.");
+                    break;
+                default:
+                    setSubmissionStatus(`Submission received. Veredict: ${responseData.veredict}`);
             }
+            
+            setCode("");
+            setFile(null);
         } catch (error) {
             console.error("Submission error:", error.message);
             setSubmissionStatus("Error: Could not connect to server.");

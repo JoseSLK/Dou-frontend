@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./style/Submission.css";
 import { useAuth } from "../../../Context/AuthContext";
+import { submissionService } from '../../../services/submissionService';
 
 const useRenderCount = (componentName) => {
     const renderCount = useRef(0);
@@ -34,32 +35,9 @@ export function SubmissionList({ problemId }) {
             setLoading(true);
             setError(null);
 
-            let response;
-            
-            if (problemId) {
-                const requestBody = {
-                    user_id: user.id,
-                    problem_id: problemId
-                };
-                
-                response = await fetch("http://localhost:8080/submission/attemps", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(requestBody),
-                });
-            } else {
-                response = await fetch(`http://localhost:8080/submission/user/${user.id}`, {
-                    method: "GET"
-                });
-            }
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
+            const data = problemId 
+                ? await submissionService.getSubmissionAttempts(user.id, problemId)
+                : await submissionService.getUserSubmissions(user.id);
 
             if (Array.isArray(data)) {
                 setSubmissions(data);
