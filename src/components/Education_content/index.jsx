@@ -6,15 +6,34 @@ import { ArticleItem } from "./ArticleItem";
 import { Article } from "./Article";
 import { EditArticle } from "./EditArticle";
 import { CreateArticle } from "./CreateArticle";
+import { useParams } from "react-router-dom";
 
-export function EducationContent () {
-    const { content, searchContent, searchArticles, selectedMaterial } = useContent();
+export function EducationContent ({ initialTab = "" }) {
+    const { content, searchContent, searchArticles, selectedMaterial, fetchArticleById, setSelectedMaterial } = useContent();
     const { user } = useAuth();
     const [searchQuery, setSearchQuery] = useState("");
     const [debouncedTerm, setDebouncedTerm] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
+    const { contentId } = useParams();
+
+    useEffect(() => {
+        if (contentId) {
+            const articleId = parseInt(contentId);
+            if (content && Array.isArray(content)) {
+                const article = content.find(art => art.material_id === articleId);
+                if (article) {
+                    setSelectedMaterial(article);
+                    fetchArticleById(articleId);
+                } else {
+                    fetchArticleById(articleId);
+                }
+            } else {
+                fetchArticleById(articleId);
+            }
+        }
+    }, [contentId, content, fetchArticleById, setSelectedMaterial]);
 
     const handleSearch = async (e) => {
         const term = e.target.value || "";
@@ -64,7 +83,7 @@ export function EducationContent () {
 
     const articlesToRender = debouncedTerm && searchContent?.length > 0
     ? searchContent
-    : content;
+    : content || [];
 
     return (
         <div className="dou-education-content">
@@ -82,12 +101,17 @@ export function EducationContent () {
 
                 {articlesToRender?.length > 0 ? (
                     articlesToRender.map(article => (
-                        <ArticleItem article={article} key={article.material_id} />
+                        <ArticleItem 
+                            article={article} 
+                            key={article.material_id} 
+                            isSelected={article.material_id === parseInt(contentId)}
+                        />
                     ))
                 ) : (
                     <p>No se encontraron artículos.</p>
                 )}
             </div>
+            
             <div className="dou-content">
                 {isEditing ? (
                     <EditArticle 
