@@ -73,16 +73,6 @@ export function FormCreate() {
     
     return (
         <div className="dou-exercises-create">
-            <div className="dou-content-guide">
-                <h4>Guía Rápida</h4>
-                <p>
-                    Completa los detalles del nuevo ejercicio. Asegúrate de que el
-                    archivo <strong>.zip</strong> contenga todo lo necesario.
-                </p>
-                <p>Define límites claros de memoria y tiempo para la ejecución.</p>
-                <div className="guide-icon">📄➡️⚙️</div>
-            </div>
-
             <div className="dou-form-container">
                 <form className="dou-form-ex-c" onSubmit={handleSubmit} noValidate>
                     {error && <p className={`dou-form-error ${ok ? 'ok' : ''}`}>{error}</p>}
@@ -158,6 +148,92 @@ export function FormCreate() {
                         Crear Ejercicio
                     </button>
                 </form>
+            </div>
+
+            <div className="dou-content-guide">
+                <h1><span className="emoji">📁</span> Guía: Cómo Subir un Nuevo Ejercicio</h1>
+                
+                <div className="video-container">
+                    <iframe 
+                        src="https://www.youtube.com/embed/Ye5mD3NPNZE?si=iReAc5GLJjRU0-xW" 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerPolicy="strict-origin-when-cross-origin" 
+                        allowFullScreen
+                    ></iframe>
+                </div>
+
+                <div className="section">
+                    <h2><span className="emoji">📘</span> Introducción</h2>
+                    <p>
+                        En esta sección podrás crear y presentar ejercicios. A continuación te explicamos paso a paso cómo subir uno nuevo.
+                    </p>
+                </div>
+
+                <div className="section">
+                    <h2><span className="emoji">📤</span> Cómo Subir un Ejercicio</h2>
+                    <p>
+                        Para subir un ejercicio, dirígete al botón verde ubicado en la esquina superior izquierda de la interfaz. Al hacer clic, se abrirá un formulario con una entrada para cargar un archivo <strong>.zip</strong>. Este archivo es el componente más importante de tu ejercicio.
+                    </p>
+                </div>
+
+                <div className="section">
+                    <h2><span className="emoji">📦</span> Estructura del Archivo ZIP</h2>
+                    <p>
+                        El archivo ZIP debe llamarse <code>statement.zip</code> y su contenido debe seguir esta estructura:
+                    </p>
+
+                    <pre><code>statement.txt 
+                    <br />
+                    testCases/
+                    <br />
+                    _____input01.in
+                    <br />
+                    _____input02.in
+                    <br />
+                    ...
+                    <br />
+                    outputs/
+                    <br />
+                    _____output01.out
+                    <br />
+                    _____output02.out
+                    <br />
+                    ...</code></pre>
+
+                    <ul>
+                        <li><strong>statement.txt:</strong> Contiene el enunciado del ejercicio que los usuarios deberán resolver.</li>
+                        <li><strong>testCases/:</strong> Carpeta que contiene los archivos de entrada para las pruebas.</li>
+                        <li><strong>outputs/:</strong> Carpeta que contiene los archivos de salida esperados correspondientes a cada entrada.</li>
+                    </ul>
+                </div>
+
+                <div className="section">
+                    <h2><span className="emoji">🔢</span> Número de Casos de Prueba</h2>
+                    <p>
+                        Tú decides cuántos casos de prueba incluir. Sin embargo, debes asegurarte de que el número de archivos en la carpeta <strong>testCases</strong> sea exactamente igual al número de archivos en la carpeta <strong>outputs</strong>. Si no coinciden, el servidor rechazará la carga del ejercicio.
+                    </p>
+                </div>
+
+                <div className="section">
+                    <h2><span className="emoji">⚙️</span> Configuración Adicional</h2>
+                    <p>
+                        Una vez hayas creado y empaquetado correctamente el archivo ZIP, completa los siguientes campos en el formulario:
+                    </p>
+                    <ul>
+                        <li><strong>Nombre del ejercicio:</strong> Un nombre claro y descriptivo.</li>
+                        <li><strong>Límite de memoria:</strong> Establece el límite máximo de memoria permitido para la ejecución.</li>
+                        <li><strong>Límite de tiempo:</strong> Define el tiempo máximo permitido para cada ejecución.</li>
+                    </ul>
+                </div>
+
+                <div className="section">
+                    <h2><span className="emoji">✅</span> Finalizar y Crear el Ejercicio</h2>
+                    <p>
+                        Una vez completados todos los campos y seleccionado el archivo ZIP, haz clic en el botón <strong>Crear Ejercicio</strong>. Tu ejercicio quedará listo para que los usuarios lo resuelvan.
+                    </p>
+                </div>
             </div>
         </div>
     );

@@ -54,34 +54,155 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotate(-1deg);
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    border-radius: 1.25rem;
-    padding: 2rem 2.5rem;
-    max-width: 600px;
+    transform: translate(-50%, -50%);
     width: 90%;
+    max-width: 800px;
     color: #ccc;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     z-index: 10;
+    box-shadow: 
+        -15px 0 30px -15px rgba(108, 104, 104, 0.2),
+        15px 0 30px -15px rgba(108, 104, 104, 0.2);
+}
+
+.presentacion-container h1 {
+    font-size: 1.75rem;
+    color: #ccc;
+    margin: 0;
+    text-align: center;
+}
+
+.content-scroll {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+
+.content-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.content-scroll::-webkit-scrollbar-thumb {
+    background: #d8dce0;
+    border-radius: 4px;
+}
+
+.content-scroll::-webkit-scrollbar-thumb:hover {
+    background: #b8bcc0;
+}
+
+.presentacion-container .section {
+    margin-bottom: 25px;
 }
 
 .presentacion-container h2 {
-    font-size: 1.75rem;
+    font-size: 1.3rem;
     color: #ccc;
-    margin-top: 0;
-    margin-bottom: 1rem;
+    margin: 0 0 15px 0;
 }
 
 .presentacion-container p {
     font-size: 1.1rem;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
     line-height: 1.6;
+}
+
+.presentacion-container ul,
+.presentacion-container ol {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.presentacion-container li {
+    margin-bottom: 8px;
+    line-height: 1.4;
 }
 
 .highlight {
     font-weight: bold;
     color: #4f46e5;
+}
+
+/* Reutilizar estilos del video container */
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    aspect-ratio: 16/9;
+    margin-bottom: 10px;
+}
+
+.video-container iframe {
+    width: 80%;
+    height: 80%;
+    border: none;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .presentacion-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .content-scroll {
+        max-height: calc(100vh - 350px);
+    }
+
+    .presentacion-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .presentacion-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .presentacion-container p {
+        font-size: 1rem;
+    }
+}
+
+.dou-button-action {
+    padding: 5px 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.dou-button-action.create {
+    background-color: #30F284;
+    color: black;
+}
+
+.dou-button-action.search {
+    background-color: #6852F2;
+    color: black;
+}
+
+.dou-button-action.active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dou-button-action.create.active {
+    box-shadow: 0 4px 12px rgba(48, 242, 132, 0.4);
+}
+
+.dou-button-action.search.active {
+    box-shadow: 0 4px 12px rgba(104, 82, 242, 0.4);
 }

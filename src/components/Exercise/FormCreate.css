@@ -6,14 +6,17 @@
     gap: 30px; 
     padding: 20px; 
     box-sizing: border-box;
+    flex-direction: row-reverse;
+    min-height: calc(100vh - 150px);
 }
 
 /* --- Columna del Formulario --- */
 .dou-form-container {
-    flex: 2; 
+    flex: 0 0 40%;
     display: flex;
     flex-direction: column;
-    gap: 20px; 
+    gap: 20px;
+    height: 100%;
 }
 
 .dou-form-container h3 {
@@ -33,6 +36,7 @@
     border-radius: 8px; 
     box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
     box-sizing: border-box;
+    background-color: transparent;
 }
 
 /* --- Grupos de Formulario (Label + Input) --- */
@@ -151,36 +155,103 @@
 
 /* --- Columna de la Guía --- */
 .dou-content-guide {
-    flex: 1; 
+    flex: 0 0 60%;
     padding: 25px;
     border-radius: 8px;
-    border: 1px solid #e9ecef; 
+    border: 1px solid #d8dce0; 
     display: flex;
     flex-direction: column;
     gap: 15px; 
-    height: 100%; 
+    height: 100%;
     box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: transparent;
 }
 
-.dou-content-guide h4 {
+.dou-content-guide h1 {
+    font-size: 1.5rem;
+    color: #d8dce0;
+    text-align: left;
+    padding-right: 15px;
+}
+
+.dou-content-guide h2 {
+    font-size: 1.2rem;
     margin: 0 0 10px 0;
-    color: #d8dce0; 
-    text-align: center;
+    color: #d8dce0;
+}
+
+.dou-content-guide .section {
+    margin-bottom: 20px;
+    width: 100%;
+    padding-right: 15px;
 }
 
 .dou-content-guide p {
     line-height: 1.6;
     color: #d8dce0; 
     font-size: 0.95rem;
-    text-align: left; 
+    text-align: left;
+    margin: 0 0 10px 0;
+    width: 100%;
 }
 
-.guide-icon {
-    font-size: 2rem;
-    text-align: center;
-    margin-top: 15px;
-    opacity: 0.7;
+.dou-content-guide pre {
+    width: 100%;
+    overflow-x: auto;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+.dou-content-guide ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.dou-content-guide li {
     color: #d8dce0;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* Ajustar el scrollbar para que se vea mejor */
+.dou-content-guide::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dou-content-guide::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.dou-content-guide::-webkit-scrollbar-thumb {
+    background: #d8dce0;
+    border-radius: 4px;
+}
+
+.dou-content-guide::-webkit-scrollbar-thumb:hover {
+    background: #b8bcc0;
+}
+
+/* --- Contenedor del Video --- */
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    aspect-ratio: 16/9;
+}
+
+.video-container iframe {
+    width: 80%;
+    height: 80%;
+    border: none;
 }
 
 /* Media Queries */
@@ -188,6 +259,22 @@
     .dou-exercises-create {
         flex-direction: column;
         gap: 20px;
+        min-height: auto;
+    }
+
+    .dou-form-container,
+    .dou-content-guide {
+        flex: 0 0 100%;
+        width: 100%;
+        height: auto;
+    }
+
+    .dou-content-guide {
+        max-height: none;
+    }
+
+    .dou-form-ex-c {
+        height: auto;
     }
 
     .dou-form-row {
@@ -200,6 +287,10 @@
 
     .dou-button-submit {
         width: 100%;
+    }
+
+    .video-container {
+        margin: 15px 0;
     }
 }
 
