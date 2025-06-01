@@ -37,8 +37,19 @@ function extractTitle(article) {
 function cleanHtml ( article ) {
     const htmlLimpio = DOMPurify.sanitize(article, {
         USE_PROFILES: { html: true },
-        ALLOWED_TAGS: ['article','header','section','pre','p', 'b', 'i', 'u', 'strong', 'em', 'br', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 'a'], 
-        ALLOWED_ATTR: ['href', 'target', 'rel']
+        ALLOWED_TAGS: [
+            'article', 'header', 'section', 'pre', 'p', 'b', 'i', 'u', 
+            'strong', 'em', 'br', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 
+            'a', 'video', 'iframe'
+        ], 
+        ALLOWED_ATTR: [
+            'href', 'target', 'rel', 'src', 'width', 'height', 
+            'frameborder', 'allow', 'allowfullscreen', 'style',
+            'title', 'referrerpolicy', 'loading', 'importance',
+            'sandbox', 'srcdoc', 'name', 'class', 'id'
+        ],
+        ADD_ATTR: ['allowfullscreen'],
+        ADD_TAGS: ['iframe']
     });
     return htmlLimpio;
 }
