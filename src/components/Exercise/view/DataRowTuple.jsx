@@ -15,7 +15,7 @@ export function DataRowTuple({ exercise, onSelect, isSelected }) {
     return (
     
         <div className={tupleClassName} onClick={handleClick}>
-            <Link to={`/Dou-frontend/dashboard/exercises/${exercise.problem_id}`}>
+            <Link to={`/dashboard/exercises/${exercise.problem_id}`}>
                 <span className="dou-tuple-id">ID: {problem_id}</span>
                 <span className="dou-tuple-name">{problem_name}</span>
             </Link>
