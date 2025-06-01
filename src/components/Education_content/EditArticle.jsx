@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useContent } from "../../Context/ContentContext";
 import { useAuth } from "../../Context/AuthContext";
 import { materialService } from '../../services/materialService';
+import { useNavigate } from "react-router-dom";
 
 export function EditArticle({ article, onClose }) {
     const { user } = useAuth();
-    const { filesArticle } = useContent();
+    const { filesArticle, setSelectedMaterial } = useContent();
+    const navigate = useNavigate();
     const [descriptionFile, setDescriptionFile] = useState(null);
     const [attachments, setAttachments] = useState([]);
     const [error, setError] = useState("");
@@ -44,9 +46,17 @@ export function EditArticle({ article, onClose }) {
         try {
             await materialService.deleteMaterial(article.material_id);
             setSuccess("Artículo eliminado exitosamente");
+            
+            // Limpiar el estado antes de navegar
+            setSelectedMaterial(null);
+            
+            // Esperar un momento para que el usuario vea el mensaje de éxito
             setTimeout(() => {
+                // Navegar a la ruta base de educación
+                navigate('/dashboard/education', { replace: true });
+                // Cerrar el modo edición
                 onClose();
-            }, 2000);
+            }, 1000);
         } catch (err) {
             setError(err.message);
         }
