@@ -1,9 +1,182 @@
+span {
+    color:#86d6f3;
+}
 .dou-dashboard {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 100%;
+    height: calc(100vh - 68px); /* Altura total menos el header */
     width: 100%;
     box-sizing: border-box;
+    padding: 20px;
+    overflow: hidden; /* Evitar scroll en el contenedor principal */
+}
+
+.dou-dashboard-content {
+    width: 90%;
+    max-width: 1000px;
+    color: #ccc;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 15px; /* Espacio para el scrollbar */
+}
+
+/* Estilizar el scrollbar */
+.dou-dashboard-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dou-dashboard-content::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.dou-dashboard-content::-webkit-scrollbar-thumb {
+    background: #d8dce0;
+    border-radius: 4px;
+}
+
+.dou-dashboard-content::-webkit-scrollbar-thumb:hover {
+    background: #b8bcc0;
+}
+
+.dou-dashboard-content h1 {
+    font-size: 2rem;
+    color: #ccc;
+    margin-bottom: 20px;
+    margin-top: 0;
+    text-align: center;
+}
+
+.dou-dashboard-content h2 {
+    font-size: 1.5rem;
+    color: #ccc;
+    margin: 0 0 15px 0;
+}
+
+.dou-dashboard-content .section {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.dou-dashboard-content .intro-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+    color: #d8dce0;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.feature-card {
+    background: rgba(69, 67, 67, 0.15);
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(103, 101, 101, 0.2);
+}
+
+.feature-card h3 {
+    color: #6852F2;
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+}
+
+.feature-card p {
+    color: #d8dce0;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.start-btn {
+    display: inline-block;
+    background-color: #6852F2;
+    color: black;
+    padding: 12px 30px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.start-btn:hover {
+    background-color: #523dc4;
+    transform: translateY(-2px);
+}
+
+.quote {
+    font-style: italic;
+    text-align: center;
+    color: #d8dce0;
+    font-size: 1.1rem;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 4px solid #6852F2;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 0 8px 8px 0;
+}
+
+.uptc {
+    text-align: center;
+    color: #dfe0d8;
+    font-size: 0.9rem;
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 1px solid rgba(216, 220, 224, 0.1);
+}
+
+.uptc span {
+    color: #e3ee83;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .dou-dashboard {
+        height: calc(100vh - 68px);
+        padding: 15px;
+    }
+
+    .dou-dashboard-content {
+        width: 95%;
+        gap: 10px;
+        padding-right: 10px;
+    }
+
+    .dou-dashboard-content h1 {
+        font-size: 1.75rem;
+    }
+
+    .dou-dashboard-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 20px;
+    }
+
+    .start-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
 }
