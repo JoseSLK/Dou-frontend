@@ -5,8 +5,8 @@ import { authService } from '../services/authService';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null); 
-    const [token, setToken] = useState(null); 
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userRole, setUserRole] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
         const checkAuth = async () => {
             const storedToken = localStorage.getItem("token");
             const storedUser = localStorage.getItem("user");
-            
+
             if (storedToken && storedUser) {
                 try {
                     const parsedUser = JSON.parse(storedUser);
@@ -35,9 +35,9 @@ export function AuthProvider({ children }) {
 
                     try {
                         await authService.validateToken(storedToken);
-                        
-                        if (location.pathname === "/Dou-frontend/login") {
-                            navigate("/Dou-frontend/dashboard", { replace: true });
+
+                        if (location.pathname === "/login") {
+                            navigate("/dashboard", { replace: true });
                         }
                     } catch (error) {
                         setError("Sesión expirada o inválida. Por favor, inicia sesión nuevamente.");
@@ -49,16 +49,16 @@ export function AuthProvider({ children }) {
                     localStorage.removeItem("user");
                     setError("Sesión expirada o inválida. Por favor, inicia sesión nuevamente.");
 
-                    if (location.pathname !== "/Dou-frontend/login") {
-                        navigate("/Dou-frontend/login", { replace: true });
+                    if (location.pathname !== "/login") {
+                        navigate("/login", { replace: true });
                     }
                 }
-            } else if (location.pathname !== "/Dou-frontend/login" && 
-                       !location.pathname.includes("/public/") &&
-                       !location.pathname.includes("/about") &&
-                       !location.pathname.includes("/register") && 
-                       !location.pathname.includes("/forgot-password")) {
-                navigate("/Dou-frontend/login", { replace: true });
+            } else if (location.pathname !== "/login" &&
+                !location.pathname.includes("/public/") &&
+                !location.pathname.includes("/about") &&
+                !location.pathname.includes("/register") &&
+                !location.pathname.includes("/forgot-password")) {
+                navigate("/login", { replace: true });
             }
             setLoading(false);
         };
@@ -68,13 +68,13 @@ export function AuthProvider({ children }) {
     const login = async (email, password) => {
         setLoading(true);
         setError(null);
-        
+
         try {
             const data = await authService.login(email, password);
-            
+
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
-            
+
             setToken(data.token);
             setUser({
                 id: data.user.user_id,
@@ -85,8 +85,8 @@ export function AuthProvider({ children }) {
             setUserRole(data.user.user_role);
             setIsLoggedIn(true);
             setError(null);
-            
-            navigate("/Dou-frontend/dashboard", {replace: true});
+
+            navigate("/dashboard", { replace: true });
             return data;
         } catch (error) {
             console.error("Error de inicio de sesión:", error);
@@ -105,8 +105,8 @@ export function AuthProvider({ children }) {
         setUserRole(null);
         setIsLoggedIn(false);
         setError(null);
-        
-        navigate("/Dou-frontend/login", {replace: true});
+
+        navigate("/login", { replace: true });
     };
 
     const value = {
