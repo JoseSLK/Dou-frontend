@@ -9,6 +9,14 @@
     transition-duration: 0.3s;
 }
 
+.dou-tuple a {
+    text-decoration: none;
+
+}
+.data-tuple[data-discover="true"] a .data-tuple-name {
+    color: #6852F2;
+}
+
 .dou-tuple:hover {
     border-bottom: 1px solid #30F284;
 }
@@ -18,7 +26,6 @@
 }
 
 .dou-tuple-selected {
-    background-color: #30F284;
     font-weight: bold;  
 }
 
