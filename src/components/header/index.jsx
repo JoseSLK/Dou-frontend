@@ -44,14 +44,14 @@ export function Header () {
         await logout();
     }
     const handleProfileClick = () => {
-        navigate("/Dou-frontend/dashboard/profile");
+        navigate("/dashboard/profile");
     }
 
     const handleMainClick = () => {
         if (user) {
-            navigate('/Dou-frontend/dashboard');
+            navigate('/dashboard');
         } else {
-            navigate('/Dou-frontend/login');
+            navigate('/login');
         }
     };
 
@@ -85,7 +85,7 @@ export function Header () {
                     </>
                 ) : (
                     <>
-                        <Link to="/Dou-frontend/about" className="dou-header-button">Sobre nosotros</Link>
+                        <Link to="/about" className="dou-header-button">Sobre nosotros</Link>
                     </>
                 )}
             </nav>

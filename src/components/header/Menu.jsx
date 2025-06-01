@@ -45,9 +45,9 @@ export function LinkModules() {
             </div>
             {isDropdownVisible && (
                 <div className={`dou-strip-options ${showOptions? "open": ""}`}>
-                    <Link to="/Dou-frontend/dashboard/education" className="dou-strip-option">Contenido</Link>
-                    <Link to="/Dou-frontend/constest" className="dou-strip-option">Contest</Link>
-                    <Link to="/Dou-frontend/dashboard/exercises" className="dou-strip-option">Ejercicios</Link>
+                    <Link to="/dashboard/education" className="dou-strip-option">Contenido</Link>
+                    {/* <Link to="/constest" className="dou-strip-option">Contest</Link> */}
+                    <Link to="/dashboard/exercises" className="dou-strip-option">Ejercicios</Link>
                 </div>
             )}
         </div>
