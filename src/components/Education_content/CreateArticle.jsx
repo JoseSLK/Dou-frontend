@@ -51,6 +51,21 @@ export function CreateArticle({ onClose }) {
                     onChange={handleDescriptionChange}
                     required
                 />
+                <div className="help-text">
+                    <p>Para insertar videos de YouTube, usa el siguiente formato en tu archivo .txt:</p>
+                    <div className="code-example">
+                        <code>{`<iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+</iframe>`}</code>
+                    </div>
+                    <p>Reemplaza "ID_DEL_VIDEO" con el ID del video de YouTube (la parte después de v= en la URL).</p>
+                </div>
             </div>
 
             <div className="form-group">
