@@ -1,9 +1,30 @@
+/**
+ * @fileoverview Componente que maneja la visualización y gestión del perfil de usuario.
+ * Incluye funcionalidades para editar perfil, cambiar contraseña y eliminar cuenta.
+ * 
+ * @module Profile
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { SubmissionList } from "../Exercise/view/SubmissionList";
 import "./profile.css";
 import { profileService } from '../../services/profileService';
 
+/**
+ * Modal para editar el perfil del usuario.
+ * Permite actualizar el nombre de usuario y la contraseña.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {boolean} props.isOpen - Indica si el modal está abierto
+ * @param {Function} props.onClose - Función para cerrar el modal
+ * @param {Function} props.onSave - Función para guardar los cambios
+ * @param {string} props.username - Nombre de usuario actual
+ * @returns {JSX.Element|null} Modal de edición de perfil o null si está cerrado
+ */
 const EditProfileModal = ({ isOpen, onClose, onSave, username }) => {
     const [formData, setFormData] = useState({
         username: username,
@@ -116,6 +137,14 @@ const EditProfileModal = ({ isOpen, onClose, onSave, username }) => {
     );
 };
 
+/**
+ * Componente principal que maneja la visualización y gestión del perfil de usuario.
+ * Muestra la información del usuario, sus envíos y proporciona opciones para
+ * editar el perfil y eliminar la cuenta.
+ * 
+ * @component
+ * @returns {JSX.Element} Vista del perfil de usuario
+ */
 export function Profile() {
     const { user, logout } = useAuth();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
