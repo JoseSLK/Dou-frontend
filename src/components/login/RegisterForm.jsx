@@ -1,9 +1,26 @@
+/**
+ * @fileoverview Formulario de registro con validación de contraseñas y manejo de errores.
+ * Incluye validación de requisitos de contraseña y verificación de disponibilidad de datos.
+ * 
+ * @module RegisterForm
+ * @requires react
+ * @requires authService
+ */
+
 import React, { useState } from "react";
 import { BackIcon } from "../dou_icons/BackIcon";
 import "../login/login.css";
 import { DynamicText } from "../DynamicText";
 import { authService } from "../../services/authService";
 
+/**
+ * Formulario de registro con validación de datos y retroalimentación visual.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {Function} props.onSwitchToLogin - Función para volver al login
+ * @returns {JSX.Element} Formulario de registro con validaciones
+ */
 export function RegisterForm({ onSwitchToLogin }) {
     const [user_email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
@@ -12,6 +29,14 @@ export function RegisterForm({ onSwitchToLogin }) {
 
     const phrases = ["Bienvenido a DOU", "Gracias por el registro", "Esperamos que lo disfrutes"];
 
+    /**
+     * Maneja el envío del formulario de registro.
+     * Valida contraseñas y maneja errores de registro.
+     * 
+     * @async
+     * @param {Event} e - Evento de envío del formulario
+     * @throws {Error} Si hay un error en el proceso de registro
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");

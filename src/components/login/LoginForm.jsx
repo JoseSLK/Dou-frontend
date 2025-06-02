@@ -1,9 +1,27 @@
+/**
+ * @fileoverview Formulario de inicio de sesión con manejo de errores y estados de carga.
+ * Proporciona funcionalidad de login y navegación a registro/recuperación de contraseña.
+ * 
+ * @module LoginForm
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import "../login/login.css";
 
+/**
+ * Formulario de inicio de sesión con validación y manejo de errores.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {Function} props.onSwitchToRegister - Función para navegar al registro
+ * @param {Function} props.onSwitchToForgotPassword - Función para navegar a recuperación
+ * @returns {JSX.Element} Formulario de login con controles de navegación
+ */
 export function LoginForm ( { onSwitchToRegister, onSwitchToForgotPassword } ) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
