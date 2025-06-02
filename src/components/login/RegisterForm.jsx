@@ -46,7 +46,7 @@ export function RegisterForm({ onSwitchToLogin }) {
         } catch (error) {
             switch (error.status) {
                 case 400:
-                    setError("Por favor, verifica que todos los datos sean correctos");
+                    setError("La contraseña debe tener: 8+ caracteres, 1 mayúscula, 1 minúscula y 1 carácter especial (@#-&?!)");
                     break;
                 case 409:
                     setError("El correo electrónico o apodo ya está en uso, por favor intente con otro");

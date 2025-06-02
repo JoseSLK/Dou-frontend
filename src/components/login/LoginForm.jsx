@@ -58,7 +58,7 @@ export function LoginForm ( { onSwitchToRegister, onSwitchToForgotPassword } ) {
                 <input
                     className="dou-login-input"
                     name="email"
-                    placeholder="Email" 
+                    placeholder="Usuario" 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
                     required 
