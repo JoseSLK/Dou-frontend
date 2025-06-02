@@ -1,3 +1,8 @@
+/**
+ * Configuración principal de rutas de la aplicación.
+ * Define las rutas públicas (login, registro) y protegidas (dashboard, ejercicios, perfil).
+ * Implementa protección de rutas mediante autenticación.
+ */
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { AppContainer } from "../components/AppContainer";

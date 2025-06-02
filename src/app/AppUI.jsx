@@ -1,3 +1,7 @@
+/**
+ * Componente raíz de la UI que configura el enrutador y proveedores de contexto.
+ * Incluye efectos visuales (meteoros) y estructura base de la aplicación.
+ */
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Header } from "../components/header";
