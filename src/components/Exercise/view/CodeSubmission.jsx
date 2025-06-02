@@ -1,8 +1,25 @@
+/**
+ * @fileoverview Componente para la presentación de soluciones de código.
+ * Maneja la edición, envío y retroalimentación de soluciones de ejercicios.
+ * 
+ * @module CodeSubmission
+ * @requires react
+ * @requires submissionService
+ */
+
 import React, { useState, useCallback, useMemo } from "react";
 import "./style/Submission.css";
 import { useAuth } from "../../../Context/AuthContext";
 import { submissionService } from '../../../services/submissionService';
 
+/**
+ * Componente que gestiona la presentación de soluciones de código.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {string} props.problemId - ID del ejercicio al que se presenta la solución
+ * @returns {JSX.Element} Editor de código con opciones de envío
+ */
 export function CodeSubmission({ problemId }) {
     const [selectedLanguage, setSelectedLanguage] = useState("cpp");
     const [code, setCode] = useState("");
@@ -30,6 +47,14 @@ export function CodeSubmission({ problemId }) {
         setFile(uploadedFile);
     }, []);
 
+    /**
+     * Maneja el envío de la solución, ya sea desde el editor o archivo.
+     * 
+     * @async
+     * @callback
+     * @param {Event} e - Evento de envío
+     * @throws {Error} Si hay un error en el envío o la conexión
+     */
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
 

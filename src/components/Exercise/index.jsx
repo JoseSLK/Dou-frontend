@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Componente principal de ejercicios que gestiona la creación y búsqueda de ejercicios.
+ * Proporciona una interfaz unificada para crear nuevos ejercicios y buscar/presentar ejercicios existentes.
+ * 
+ * @module Exercise
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useEffect, useState } from "react";
 import "../Exercise/Exercise.css"
 import { FormCreate } from "./FormCreate";
@@ -5,7 +14,15 @@ import { ExerciseView } from "./view/ExerciseView";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { ExerciseProvider } from "../../Context/ExerciseContext";
 
-export function Exercise( { initialTab= "" } ){
+/**
+ * Componente principal de ejercicios que maneja la navegación entre creación y búsqueda.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {string} [props.initialTab=""] - Tab inicial a mostrar ('create' o 'search')
+ * @returns {JSX.Element} Componente de ejercicios
+ */
+export function Exercise({ initialTab = "" }) {
     const [status, setStatus] = useState("");
     const { problemId } = useParams();
     const navigate = useNavigate();
@@ -20,11 +37,17 @@ export function Exercise( { initialTab= "" } ){
         }
     }, [location.pathname, problemId]);
 
+    /**
+     * Navega a la vista de búsqueda de ejercicios.
+     */
     const handleSetSearch = () => {
         setStatus("search");
         navigate("/dashboard/exercises/search");
     }
 
+    /**
+     * Navega a la vista de creación de ejercicios.
+     */
     const handleSetCreate = () => {
         setStatus("create");
         navigate("/dashboard/exercises/create");

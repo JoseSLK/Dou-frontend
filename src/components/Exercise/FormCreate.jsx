@@ -1,8 +1,23 @@
+/**
+ * @fileoverview Formulario para la creación de nuevos ejercicios.
+ * Permite subir ejercicios con sus casos de prueba y configurar límites de ejecución.
+ * 
+ * @module FormCreate
+ * @requires react
+ * @requires exerciseService
+ */
+
 import React, {useState} from "react";
 import "../Exercise/FormCreate.css"
 import { useExercise } from "../../Context/ExerciseContext";
 import { exerciseService } from '../../services/exerciseService';
 
+/**
+ * Formulario para crear nuevos ejercicios con validación y manejo de archivos.
+ * 
+ * @component
+ * @returns {JSX.Element} Formulario de creación de ejercicios
+ */
 export function FormCreate() {
     const [title, setTitle] = useState(""); 
     const [memory, setMemory] = useState(""); 
@@ -12,6 +27,13 @@ export function FormCreate() {
     const [ok, setOk] = useState(false);
     const { fetchExercises } = useExercise();
 
+    /**
+     * Maneja el envío del formulario, validando y procesando los datos del ejercicio.
+     * 
+     * @async
+     * @param {Event} event - Evento de envío del formulario
+     * @throws {Error} Si hay un error en la creación del ejercicio
+     */
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError(""); 
@@ -61,6 +83,11 @@ export function FormCreate() {
         event.target.reset();
     };
  
+    /**
+     * Maneja el cambio de archivo ZIP, validando la selección.
+     * 
+     * @param {Event} event - Evento de cambio de archivo
+     */
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0]; 
         if (selectedFile) {

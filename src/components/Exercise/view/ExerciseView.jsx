@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Vista principal de ejercicios que integra la selección, visualización y envío de soluciones.
+ * Coordina la interacción entre el selector de ejercicios, la visualización y el área de envío.
+ * 
+ * @module ExerciseView
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useEffect, useCallback } from "react";
 import { ExercisePicker } from "./ExercisePicker";
 import { DisplayExercise } from "./DisplayExercise";
@@ -6,6 +15,14 @@ import { SubmissionArea } from "./SubmissionArea";
 import { useNavigate } from "react-router-dom";
 import { useExercise } from "../../../Context/ExerciseContext";
 
+/**
+ * Componente que gestiona la vista completa de un ejercicio.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {string} [props.initialProblemId=null] - ID del ejercicio a cargar inicialmente
+ * @returns {JSX.Element} Vista de ejercicio con selector o panel de ejercicio
+ */
 export function ExerciseView({ initialProblemId = null }) {
     const navigate = useNavigate();
     const { selectedExercise, exercises, selectExercise, fetchExerciseById } = useExercise();

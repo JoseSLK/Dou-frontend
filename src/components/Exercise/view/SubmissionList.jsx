@@ -1,8 +1,23 @@
+/**
+ * @fileoverview Componente que muestra el historial de envíos de un usuario.
+ * Permite ver y expandir los detalles de cada envío realizado.
+ * 
+ * @module SubmissionList
+ * @requires react
+ * @requires submissionService
+ */
+
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./style/Submission.css";
 import { useAuth } from "../../../Context/AuthContext";
 import { submissionService } from '../../../services/submissionService';
 
+/**
+ * Hook personalizado para contar renderizados en desarrollo.
+ * @private
+ * @param {string} componentName - Nombre del componente
+ * @returns {number} Contador de renderizados
+ */
 const useRenderCount = (componentName) => {
     const renderCount = useRef(0);
     
@@ -16,6 +31,14 @@ const useRenderCount = (componentName) => {
     return renderCount.current;
 };
 
+/**
+ * Lista de envíos con funcionalidad de expansión para ver detalles.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {string} [props.problemId] - ID del ejercicio para filtrar envíos
+ * @returns {JSX.Element} Lista de envíos con detalles expandibles
+ */
 export function SubmissionList({ problemId }) {
     const [submissions, setSubmissions] = useState([]);
     const [expanded, setExpanded] = useState(null);
@@ -25,6 +48,14 @@ export function SubmissionList({ problemId }) {
 
     useRenderCount('SubmissionList');
 
+    /**
+     * Obtiene los envíos del usuario, filtrados por ejercicio si se especifica.
+     * 
+     * @async
+     * @callback
+     * @returns {Promise<void>}
+     * @throws {Error} Si hay un error al obtener los envíos
+     */
     const fetchSubmissions = useCallback(async () => {
         if (!user?.id) {
             setLoading(false);
