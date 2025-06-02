@@ -1,8 +1,29 @@
+/**
+ * @fileoverview Contexto que gestiona el estado global del contenido educativo.
+ * Maneja la carga, búsqueda y selección de artículos y materiales didácticos.
+ * 
+ * @module ContentContext
+ * @requires react
+ * @requires contentService
+ */
+
 import React, { useCallback, useContext, createContext, useState, useEffect, useMemo } from "react";
 import { contentService } from '../services/contentService';
 
+/**
+ * Contexto que mantiene el estado del contenido educativo.
+ * @type {React.Context}
+ */
 const ContentContext = createContext();
 
+/**
+ * Proveedor del contexto de contenido que maneja el estado global de los materiales educativos.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {React.ReactNode} props.children - Componentes hijos que tendrán acceso al contexto
+ * @returns {JSX.Element} Proveedor del contexto de contenido
+ */
 export function ContentProvider({ children }) {
     const [selectedMaterial, setSelectedMaterial] = useState(null);
     const [filesArticle, setFilesArticle] = useState(null);
@@ -11,6 +32,14 @@ export function ContentProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    /**
+     * Carga el contenido educativo por defecto.
+     * 
+     * @async
+     * @callback
+     * @returns {Promise<void>}
+     * @throws {Error} Si hay un error al cargar el contenido
+     */
     const loadContent = useCallback(async () => {
         setLoading(true);
         setError(null);
@@ -26,6 +55,15 @@ export function ContentProvider({ children }) {
         }
     }, []);
 
+    /**
+     * Obtiene un artículo específico por su ID y sus archivos adjuntos.
+     * 
+     * @async
+     * @callback
+     * @param {string} materialId - ID del material a obtener
+     * @returns {Promise<void>}
+     * @throws {Error} Si hay un error al cargar el artículo
+     */
     const fetchArticleById = useCallback(async (materialId) => {
         if (!materialId) return;
 
@@ -44,6 +82,15 @@ export function ContentProvider({ children }) {
         }
     }, []);
 
+    /**
+     * Busca artículos basados en un término de búsqueda.
+     * 
+     * @async
+     * @callback
+     * @param {string} searchTerm - Término de búsqueda
+     * @returns {Promise<void>}
+     * @throws {Error} Si hay un error en la búsqueda
+     */
     const searchArticles = useCallback(async (searchTerm) => {
         if (!searchTerm || !searchTerm.trim()) {
             setSearchContent([]);
@@ -65,6 +112,12 @@ export function ContentProvider({ children }) {
         }
     }, []);
 
+    /**
+     * Selecciona un artículo para visualización.
+     * 
+     * @callback
+     * @param {Object} article - Artículo a seleccionar
+     */
     const selectArticle = useCallback((article) => {
         setSelectedMaterial(article);
     }, []);
@@ -93,6 +146,12 @@ export function ContentProvider({ children }) {
     );
 }
 
+/**
+ * Hook personalizado para acceder al contexto de contenido.
+ * 
+ * @returns {Object} Contexto de contenido
+ * @throws {Error} Si se usa fuera de un ContentProvider
+ */
 export function useContent() {
     const context = useContext(ContentContext);
     if (!context) {

@@ -1,9 +1,31 @@
+/**
+ * @fileoverview Contexto de autenticación que gestiona el estado global de la sesión de usuario.
+ * Proporciona funcionalidades de login, logout y validación de tokens.
+ * 
+ * @module AuthContext
+ * @requires react
+ * @requires react-router-dom
+ * @requires authService
+ */
+
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { authService } from '../services/authService';
 
+/**
+ * Contexto de autenticación que mantiene el estado de la sesión del usuario.
+ * @type {React.Context}
+ */
 const AuthContext = createContext();
 
+/**
+ * Proveedor del contexto de autenticación que maneja el estado global de la sesión.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {React.ReactNode} props.children - Componentes hijos que tendrán acceso al contexto
+ * @returns {JSX.Element} Proveedor del contexto de autenticación
+ */
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
@@ -65,6 +87,15 @@ export function AuthProvider({ children }) {
         checkAuth();
     }, [navigate, location.pathname]);
 
+    /**
+     * Inicia sesión en el sistema y actualiza el estado global.
+     * 
+     * @async
+     * @param {string} email - Correo electrónico del usuario
+     * @param {string} password - Contraseña del usuario
+     * @returns {Promise<Object>} Datos del usuario autenticado
+     * @throws {Error} Si hay un error en el proceso de autenticación
+     */
     const login = async (email, password) => {
         setLoading(true);
         setError(null);
@@ -97,6 +128,10 @@ export function AuthProvider({ children }) {
         }
     };
 
+    /**
+     * Cierra la sesión del usuario y limpia el estado global.
+     * Redirige al usuario a la página de login.
+     */
     const logout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
@@ -121,6 +156,12 @@ export function AuthProvider({ children }) {
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+/**
+ * Hook personalizado para acceder al contexto de autenticación.
+ * 
+ * @returns {Object} Contexto de autenticación
+ * @throws {Error} Si se usa fuera de un AuthProvider
+ */
 export function useAuth() {
     const context = useContext(AuthContext);
     if (!context) {
