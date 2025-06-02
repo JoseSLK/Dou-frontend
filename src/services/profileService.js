@@ -1,3 +1,7 @@
+/**
+ * Servicio que maneja las operaciones del perfil de usuario.
+ * Permite actualizar datos del perfil, cambiar contraseña y eliminar cuenta.
+ */
 import { API_URL } from '../config/constants';
 
 export const profileService = {

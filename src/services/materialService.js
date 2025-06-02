@@ -1,3 +1,7 @@
+/**
+ * Servicio que gestiona el material educativo (artículos y archivos adjuntos).
+ * Permite crear, actualizar y eliminar material con sus archivos asociados.
+ */
 import { API_URL } from '../config/constants';
 
 export const materialService = {

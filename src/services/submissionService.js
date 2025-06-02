@@ -1,3 +1,7 @@
+/**
+ * Servicio que gestiona las entregas de código y sus intentos.
+ * Permite enviar soluciones y consultar el historial de intentos de los usuarios.
+ */
 import { API_URL } from '../config/constants';
 
 export const submissionService = {

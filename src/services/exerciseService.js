@@ -1,3 +1,7 @@
+/**
+ * Servicio que maneja las operaciones CRUD de ejercicios.
+ * Permite crear, obtener y buscar ejercicios del sistema.
+ */
 import { API_URL } from '../config/constants';
 
 export const exerciseService = {

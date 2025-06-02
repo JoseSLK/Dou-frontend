@@ -1,3 +1,7 @@
+/**
+ * Servicio de autenticación que maneja el registro, login y validación de tokens.
+ * Gestiona todas las operaciones relacionadas con la autenticación de usuarios.
+ */
 import { API_URL } from '../config/constants';
 
 export const authService = {

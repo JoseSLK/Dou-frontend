@@ -1,3 +1,7 @@
+/**
+ * Servicio que gestiona el contenido educativo y material didáctico.
+ * Maneja la obtención, búsqueda y procesamiento de artículos y sus adjuntos.
+ */
 import { API_URL } from '../config/constants';
 import articleProcessor from "../utils/articleProcessor";
 
