@@ -1,8 +1,24 @@
+/**
+ * @fileoverview Componente que maneja el menú de navegación de módulos de la aplicación.
+ * Proporciona acceso rápido a las diferentes secciones (Contenido, Ejercicios).
+ * 
+ * @module Menu
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useEffect, useRef } from "react";
 import "../header/header.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Componente que renderiza el menú de navegación de módulos.
+ * Incluye un botón de hamburguesa que despliega las opciones de navegación.
+ * 
+ * @component
+ * @returns {JSX.Element} Menú de navegación con enlaces a las diferentes secciones
+ */
 export function LinkModules() {
     const [showOptions, setShowOptions] = useState(false);
     const [isDropdownVisible, setIsDropdownVisibleOpen] = useState(false);

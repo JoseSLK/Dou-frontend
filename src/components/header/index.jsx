@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Componente que maneja la barra de navegación superior de la aplicación.
+ * Incluye el logo, menú de navegación y funcionalidades de usuario (avatar, perfil, logout).
+ * 
+ * @module Header
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useEffect, useRef } from "react";
 import "./header.css";
 import { Link } from "react-router-dom";
@@ -6,6 +15,13 @@ import { useAuth } from "../../Context/AuthContext";
 import { useState } from "react";
 import { LinkModules } from "./Menu";
 
+/**
+ * Componente principal de la barra de navegación.
+ * Maneja la navegación, el estado de autenticación y el menú desplegable del usuario.
+ * 
+ * @component
+ * @returns {JSX.Element} Barra de navegación con funcionalidades de usuario
+ */
 export function Header () {
     const {user, logout} = useAuth();
     const navigate = useNavigate();
