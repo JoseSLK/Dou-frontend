@@ -1,8 +1,26 @@
+/**
+ * @fileoverview Componente que renderiza un elemento individual de la lista de artículos.
+ * 
+ * @module ArticleItem
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React from "react";
 import { useContent } from "../../Context/ContentContext";
 import { Link, useNavigate } from "react-router-dom";
 
-export function ArticleItem ( { article, isSelected } ) {
+/**
+ * Componente que representa un artículo individual en la lista de artículos.
+ * Al hacer clic, navega a la vista detallada del artículo.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {Object} props.article - Datos del artículo a mostrar
+ * @param {boolean} props.isSelected - Indica si el artículo está actualmente seleccionado
+ * @returns {JSX.Element} Elemento de lista representando un artículo
+ */
+export function ArticleItem({ article, isSelected }) {
     const { material_id, title } = article;
     const { setSelectedMaterial } = useContent();
     const navigate = useNavigate();

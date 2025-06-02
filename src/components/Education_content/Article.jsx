@@ -1,6 +1,20 @@
+/**
+ * @fileoverview Componente que maneja la visualización de artículos educativos y sus archivos adjuntos.
+ * 
+ * @module Article
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useEffect, useState } from "react";
 import { useContent } from "../../Context/ContentContext";
 
+/**
+ * Componente que renderiza la lista de archivos adjuntos de un artículo.
+ * 
+ * @component
+ * @returns {JSX.Element|null} Lista de archivos adjuntos o null si no hay archivos
+ */
 function DownloadContent() {
     const { filesArticle } = useContent();
     
@@ -29,6 +43,14 @@ function DownloadContent() {
     );
 }
 
+/**
+ * Componente principal que renderiza el contenido de un artículo educativo.
+ * Incluye el contenido HTML del artículo y sus archivos adjuntos.
+ * Si no hay artículo seleccionado, muestra una guía de uso.
+ * 
+ * @component
+ * @returns {JSX.Element} Vista del artículo o guía de uso
+ */
 export function Article() {
     const { selectedMaterial, fetchArticleById } = useContent();
     const [AID, setAID] = useState();

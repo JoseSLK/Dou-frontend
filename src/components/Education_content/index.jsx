@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Componente principal de contenido educativo que gestiona la visualización,
+ * búsqueda, creación y edición de artículos educativos.
+ * 
+ * @module EducationContent
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useEffect, useState  } from "react";
 import "./educationContent.css";
 import { useContent } from "../../Context/ContentContext";
@@ -8,6 +17,14 @@ import { EditArticle } from "./EditArticle";
 import { CreateArticle } from "./CreateArticle";
 import { useParams } from "react-router-dom";
 
+/**
+ * Componente principal que maneja la gestión de contenido educativo.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {string} [props.initialTab=""] - Tab inicial a mostrar
+ * @returns {JSX.Element} Vista de contenido educativo con menú y área de contenido
+ */
 export function EducationContent ({ initialTab = "" }) {
     const { content, searchContent, searchArticles, selectedMaterial, fetchArticleById, setSelectedMaterial } = useContent();
     const { user } = useAuth();
@@ -35,20 +52,34 @@ export function EducationContent ({ initialTab = "" }) {
         }
     }, [contentId, content, fetchArticleById, setSelectedMaterial]);
 
+    /**
+     * Maneja la búsqueda de artículos con debounce.
+     * 
+     * @param {Event} e - Evento de cambio del input
+     */
     const handleSearch = async (e) => {
         const term = e.target.value || "";
         setSearchQuery(term);
     }
 
+    /**
+     * Alterna la visibilidad del menú lateral.
+     */
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     }
 
+    /**
+     * Activa el modo de edición para el artículo seleccionado.
+     */
     const handleEditClick = () => {
         setIsEditing(true);
         setIsCreating(false);
     }
 
+    /**
+     * Activa el modo de creación de nuevo artículo.
+     */
     const handleCreateClick = () => {
         setIsCreating(true);
         setIsEditing(false);

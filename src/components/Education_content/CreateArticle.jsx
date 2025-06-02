@@ -1,7 +1,25 @@
+/**
+ * @fileoverview Componente que maneja la creación de nuevos artículos educativos.
+ * Permite subir archivos de contenido y adjuntos.
+ * 
+ * @module CreateArticle
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
 import { materialService } from '../../services/materialService';
 
+/**
+ * Componente que proporciona un formulario para crear nuevos artículos educativos.
+ * Permite subir un archivo principal de contenido y archivos adjuntos opcionales.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {Function} props.onClose - Función para cerrar el formulario de creación
+ * @returns {JSX.Element} Formulario de creación de artículos
+ */
 export function CreateArticle({ onClose }) {
     const { user } = useAuth();
     const [descriptionFile, setDescriptionFile] = useState(null);

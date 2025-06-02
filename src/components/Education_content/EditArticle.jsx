@@ -1,9 +1,28 @@
+/**
+ * @fileoverview Componente que maneja la edición de artículos educativos existentes.
+ * Permite actualizar el contenido y archivos adjuntos de un artículo.
+ * 
+ * @module EditArticle
+ * @requires react
+ * @requires react-router-dom
+ */
+
 import React, { useState } from "react";
 import { useContent } from "../../Context/ContentContext";
 import { useAuth } from "../../Context/AuthContext";
 import { materialService } from '../../services/materialService';
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Componente que proporciona un formulario para editar artículos educativos existentes.
+ * Permite actualizar el archivo principal de contenido y los archivos adjuntos.
+ * 
+ * @component
+ * @param {Object} props - Propiedades del componente
+ * @param {Object} props.article - Artículo a editar
+ * @param {Function} props.onClose - Función para cerrar el formulario de edición
+ * @returns {JSX.Element} Formulario de edición de artículos
+ */
 export function EditArticle({ article, onClose }) {
     const { user } = useAuth();
     const { filesArticle, setSelectedMaterial } = useContent();
