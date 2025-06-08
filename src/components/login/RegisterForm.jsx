@@ -47,6 +47,13 @@ export function RegisterForm({ onSwitchToLogin }) {
         const password2 = e.target.password2.value;
         const username = e.target.nickname.value;
 
+        // Validación del dominio del correo
+        if (!user_email.endsWith('@uptc.edu.co')) {
+            setError("El correo electrónico debe ser del dominio @uptc.edu.co");
+            setLoading(false);
+            return;
+        }
+
         if (user_password !== password2) {
             setError("Las contraseñas no coinciden");
             setLoading(false);
