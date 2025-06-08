@@ -1,8 +1,25 @@
 /**
- * Configuración principal de rutas de la aplicación.
- * Define las rutas públicas (login, registro) y protegidas (dashboard, ejercicios, perfil).
- * Implementa protección de rutas mediante autenticación.
+ * @fileoverview Configuración principal de rutas de la aplicación DOU.
+ * Define y gestiona todas las rutas de la aplicación, incluyendo rutas públicas y protegidas.
+ * Implementa un sistema de protección de rutas basado en autenticación.
+ * 
+ * @module AppRoutes
+ * @requires react
+ * @requires react-router-dom
+ * @requires ../components/AppContainer
+ * @requires ../components/Dashboard
+ * @requires ../components/login/LoginForm
+ * @requires ../components/login/RegisterForm
+ * @requires ../components/login/ForgotPasswordForm
+ * @requires ../Context/AuthContext
+ * @requires ../components/Education_content
+ * @requires ../components/about
+ * @requires ../components/Exercise
+ * @requires ../components/Exercise/view/ExerciseView
+ * @requires ../components/Profile
+ * @requires ../Context/ContentContext
  */
+
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { AppContainer } from "../components/AppContainer";
@@ -18,10 +35,28 @@ import { ExerciseView } from "../components/Exercise/view/ExerciseView";
 import { Profile } from "../components/Profile";
 import { ContentProvider } from "../Context/ContentContext";
 
+/**
+ * Componente que define y gestiona todas las rutas de la aplicación.
+ * Incluye:
+ * - Rutas públicas (login, registro, recuperación de contraseña)
+ * - Rutas protegidas (dashboard, ejercicios, perfil)
+ * - Sistema de redirección y protección de rutas
+ * 
+ * @component
+ * @returns {JSX.Element} Configuración de rutas de la aplicación
+ */
 export function AppRoutes () {
     const navigate = useNavigate();
 
-
+    /**
+     * Componente de ruta protegida que verifica la autenticación del usuario.
+     * Redirige al login si el usuario no está autenticado.
+     * 
+     * @component
+     * @param {Object} props - Propiedades del componente
+     * @param {React.ReactNode} props.children - Componentes hijos a renderizar si el usuario está autenticado
+     * @returns {JSX.Element} Componente protegido o formulario de login
+     */
     function ProtectedRoute({ children }) {
         const { user, loading } = useAuth();
         const navigate = useNavigate();
@@ -32,7 +67,7 @@ export function AppRoutes () {
     return (
         <AppContainer>
             <Routes>
-                {/* Antes del login */}
+                {/* Rutas públicas - Acceso sin autenticación */}
                 <Route
                     path="/login"
                     element={
@@ -53,8 +88,9 @@ export function AppRoutes () {
                     element={<ForgotPasswordForm onSwitchToLogin={() => navigate("/login")} />}
                 />
                 
-                {/* Luego del login */}
+                {/* Rutas protegidas - Requieren autenticación */}
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
+                    {/* Subrutas del dashboard */}
                     <Route path="education" element={<ContentProvider><EducationContent/></ContentProvider>} />
                     <Route path="education/:contentId" element={<ContentProvider><EducationContent initialTab="search" /></ContentProvider>} />
                     <Route path="exercises" element={<Exercise />}/>
@@ -64,8 +100,10 @@ export function AppRoutes () {
                     <Route path="profile" element={<Profile/>}/>
                 </Route>
 
+                {/* Ruta pública adicional */}
                 <Route path="/about" element={<About />} />
                 
+                {/* Ruta 404 - Página no encontrada */}
                 <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
             </Routes>
         </AppContainer>
