@@ -8,6 +8,7 @@
     height: 100%;
     max-height: 100%;
     padding: 20px;
+    overflow-y: auto; /* Agregamos scroll vertical */
 }
 
 .dou-profile__info {
@@ -196,10 +197,12 @@
         grid-template-columns: 1fr; 
         height: auto;
         min-height: 100%; 
+        overflow-y: auto; /* Mantenemos el scroll en pantallas pequeñas */
+        padding-bottom: 40px; /* Espacio extra al final */
     }
 
     .dou-profile__submissions {
         min-height: 300px;
-        max-height: 500px;
+        max-height: none; /* Quitamos el max-height para permitir que crezca con el contenido */
     }
 }

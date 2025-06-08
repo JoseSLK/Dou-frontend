@@ -1,13 +1,13 @@
 .dou-exercises-create {
     display: flex;
     width: 100%;
-    height: 100%; 
+    height: 100%;
     font-size: 1rem; 
     gap: 30px; 
     padding: 20px; 
     box-sizing: border-box;
     flex-direction: row-reverse;
-    min-height: calc(100vh - 150px);
+    overflow-y: auto;
 }
 
 /* --- Columna del Formulario --- */
@@ -259,7 +259,7 @@
     .dou-exercises-create {
         flex-direction: column;
         gap: 20px;
-        min-height: auto;
+        padding-bottom: 40px;
     }
 
     .dou-form-container,
@@ -267,10 +267,12 @@
         flex: 0 0 100%;
         width: 100%;
         height: auto;
+        overflow-y: visible;
     }
 
     .dou-content-guide {
         max-height: none;
+        overflow-y: visible;
     }
 
     .dou-form-ex-c {
