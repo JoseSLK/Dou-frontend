@@ -31,9 +31,9 @@ import { useAuth } from "../Context/AuthContext";
 import { EducationContent } from "../components/Education_content";
 import { About } from "../components/about";
 import { Exercise } from "../components/Exercise";
-import { ExerciseView } from "../components/Exercise/view/ExerciseView";
 import { Profile } from "../components/Profile";
 import { ContentProvider } from "../Context/ContentContext";
+import { ArenaCode } from "../components/ArenaCode";
 
 /**
  * Componente que define y gestiona todas las rutas de la aplicación.
@@ -98,6 +98,7 @@ export function AppRoutes () {
                     <Route path="exercises/create" element={<Exercise initialTab="create" />} />
                     <Route path="exercises/:problemId" element={<Exercise initialTab="search" />} />
                     <Route path="profile" element={<Profile/>}/>
+                    <Route path="contest" element={<ArenaCode />} />
                 </Route>
 
                 {/* Ruta pública adicional */}
