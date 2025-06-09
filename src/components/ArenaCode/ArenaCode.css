@@ -1,0 +1,706 @@
+.dou-dashboard {
+    padding: 0;
+}
+
+.dou-arena-code {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 40, 0.95) 100%);
+    box-sizing: border-box;
+    gap: 2rem;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.dou-arena-code::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.dou-arena-code-header {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.dou-arena-code-header::-webkit-scrollbar {
+    height: 4px;
+}
+
+.dou-arena-code-header::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dou-arena-code-header::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.arena-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    margin: 0;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 
+        0 0 10px rgba(74, 144, 226, 0.5),
+        0 0 20px rgba(108, 92, 231, 0.3);
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+.arena-description {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    max-width: 800px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 0 1rem;
+}
+
+.match-button {
+    padding: 1rem 2.5rem;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    font-weight: 600;
+    min-width: 200px;
+    background: #6852F2;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 
+        0 4px 15px rgba(74, 144, 226, 0.3),
+        0 0 0 2px rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.match-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.match-button:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 8px 25px rgba(74, 144, 226, 0.4),
+        0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.match-button:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.match-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: scale(0.95);
+}
+
+.match-button.matching {
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    cursor: not-allowed;
+    animation: buttonPulse 2s infinite;
+}
+
+.arena-exercise-view {
+    flex: 1;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.arena-exercise-view .exercise-view-container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+    transform: scale(0.95);
+    transform-origin: top center;
+}
+
+.arena-exercise-view .exercise-view-left-panel,
+.arena-exercise-view .exercise-view-right-panel {
+    height: 100%;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+}
+
+.arena-exercise-view .exercise-view-left-panel {
+    flex: 1;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.arena-exercise-view .exercise-view-right-panel {
+    flex: 1;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.arena-exercise-loading,
+.arena-exercise-error {
+    width: 95%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin: 0 auto;
+    color: #fff;
+    transform: scale(0.95);
+    transform-origin: top center;
+    position: relative;
+    z-index: 1;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #2196F3;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 1rem;
+}
+
+.arena-exercise-error h3 {
+    color: #f44336;
+    margin-bottom: 0.5rem;
+}
+
+.arena-exercise-error p {
+    color: #ff8a80;
+    text-align: center;
+    max-width: 80%;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Estados de interacción */
+.arena-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.arena-status.start {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+}
+
+.arena-status.submission {
+    background: rgba(33, 150, 243, 0.2);
+    color: #2196F3;
+}
+
+.arena-status.verdict {
+    background: rgba(255, 152, 0, 0.2);
+    color: #FF9800;
+}
+
+.arena-status.verdict.ac {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
+}
+
+.arena-status.verdict.wa {
+    background: rgba(244, 67, 54, 0.2);
+    color: #F44336;
+}
+
+.arena-status.winner {
+    background: rgba(156, 39, 176, 0.2);
+    color: #9C27B0;
+    animation: winnerPulse 2s infinite;
+}
+
+.arena-status.error {
+    background: rgba(244, 67, 54, 0.2);
+    color: #F44336;
+}
+
+.arena-status.disconnected {
+    background: rgba(158, 158, 158, 0.2);
+    color: #9E9E9E;
+}
+
+.arena-status-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arena-status-text {
+    font-size: 0.85rem;
+}
+
+.arena-opponent-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.arena-opponent-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.arena-opponent-name {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.arena-verdict-details {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-left: 0.25rem;
+}
+
+@keyframes winnerPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.arena-header-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    padding: 0.5rem 1rem;
+}
+
+.arena-player-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 200px;
+}
+
+.arena-player-label {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+.arena-player-name {
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.arena-status-container,
+.arena-verdict-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.arena-status-container.active,
+.arena-verdict-container.active {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.arena-status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+}
+
+.arena-status-container.active .arena-status-indicator {
+    animation: pulse 2s infinite;
+}
+
+.arena-verdict-value {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.arena-verdict-value.wa {
+    color: #f44336;
+}
+
+.arena-verdict-value.ac {
+    color: #4CAF50;
+}
+
+.arena-verdict-value.tle {
+    color: #ff9800;
+}
+
+.arena-verdict-value.mle {
+    color: #9c27b0;
+}
+
+.arena-verdict-value.rte {
+    color: #e91e63;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+    }
+    70% {
+        transform: scale(1.2);
+        box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px rgba(74, 144, 226, 0.5),
+            0 0 20px rgba(108, 92, 231, 0.3);
+    }
+    50% {
+        text-shadow: 
+            0 0 20px rgba(74, 144, 226, 0.7),
+            0 0 40px rgba(108, 92, 231, 0.5);
+    }
+}
+
+@keyframes buttonPulse {
+    0% {
+        box-shadow: 
+            0 4px 15px rgba(74, 144, 226, 0.3),
+            0 0 0 2px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 4px 25px rgba(74, 144, 226, 0.5),
+            0 0 0 4px rgba(255, 255, 255, 0.2);
+    }
+    100% {
+        box-shadow: 
+            0 4px 15px rgba(74, 144, 226, 0.3),
+            0 0 0 2px rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .dou-arena-code {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .dou-arena-code-header {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .arena-title {
+        font-size: 0.9rem;
+    }
+
+    .arena-description {
+        font-size: 0.8rem;
+    }
+
+    .match-button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: 90px;
+    }
+
+    .arena-exercise-view,
+    .arena-exercise-loading,
+    .arena-exercise-error {
+        transform: scale(0.9);
+    }
+
+    .arena-exercise-view .exercise-view-container {
+        flex-direction: column;
+        transform: scale(0.9);
+    }
+
+    .arena-exercise-view .exercise-view-left-panel,
+    .arena-exercise-view .exercise-view-right-panel {
+        height: 50%;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .arena-status {
+        font-size: 0.85rem;
+        padding: 0.2rem 0.4rem;
+    }
+
+    .arena-status-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .arena-status-text {
+        font-size: 0.8rem;
+    }
+
+    .arena-opponent-info {
+        font-size: 0.8rem;
+    }
+
+    .arena-opponent-avatar {
+        width: 18px;
+        height: 18px;
+    }
+
+    .arena-header-content {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-start;
+    }
+
+    .arena-player-info,
+    .arena-status-container,
+    .arena-verdict-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .dou-arena-code {
+        padding: 0.5rem;
+        gap: 0.5rem;
+    }
+
+    .dou-arena-code-header {
+        padding: 0.4rem 0.6rem;
+    }
+
+    .arena-title {
+        font-size: 0.8rem;
+    }
+
+    .arena-description {
+        font-size: 0.7rem;
+    }
+
+    .match-button {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        min-width: 80px;
+    }
+
+    .arena-status {
+        font-size: 0.8rem;
+        padding: 0.15rem 0.3rem;
+    }
+
+    .arena-status-icon {
+        width: 12px;
+        height: 12px;
+    }
+
+    .arena-status-text {
+        font-size: 0.75rem;
+    }
+
+    .arena-opponent-info {
+        font-size: 0.75rem;
+    }
+
+    .arena-opponent-avatar {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.arena-result-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1400px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.arena-result-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 2rem;
+}
+
+.arena-result-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex: 1;
+}
+
+.arena-result-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 
+        0 0 30px rgba(104, 82, 242, 0.3),
+        0 0 60px rgba(104, 82, 242, 0.2);
+    animation: imageFloat 3s ease-in-out infinite;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.arena-result-image.winner {
+    width: 400px;
+    height: auto;
+    border-radius: 20px;
+    animation: winnerImageFloat 3s ease-in-out infinite;
+}
+
+.arena-result-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.01);
+    transition: transform 0.3s ease;
+}
+
+.arena-result-image.winner img {
+    transform: none;
+    height: auto;
+}
+
+.arena-result-image:hover img {
+    transform: scale(1.1);
+}
+
+.arena-result-image.winner:hover img {
+    transform: none;
+}
+
+@keyframes imageFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        box-shadow: 
+            0 0 30px rgba(104, 82, 242, 0.3),
+            0 0 60px rgba(104, 82, 242, 0.2);
+    }
+    50% {
+        transform: translateY(-10px) rotate(2deg);
+        box-shadow: 
+            0 10px 40px rgba(104, 82, 242, 0.4),
+            0 20px 80px rgba(104, 82, 242, 0.3);
+    }
+}
+
+@keyframes winnerImageFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        box-shadow: 
+            0 0 30px rgba(104, 82, 242, 0.3),
+            0 0 60px rgba(104, 82, 242, 0.2);
+    }
+    50% {
+        transform: translateY(-15px) rotate(1deg);
+        box-shadow: 
+            0 15px 40px rgba(104, 82, 242, 0.4),
+            0 30px 80px rgba(104, 82, 242, 0.3);
+    }
+}
+
+@media (max-width: 1024px) {
+    .arena-result-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .arena-result-text {
+        align-items: center;
+    }
+
+    .arena-result-image.winner {
+        width: 300px;
+        order: -1;
+    }
+}

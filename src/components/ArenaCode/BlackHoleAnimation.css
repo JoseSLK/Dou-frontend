@@ -1,0 +1,226 @@
+/* Black Hole Animation Container */
+.black-hole-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+}
+
+/* Main Black Hole Structure */
+.black-hole {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    animation: blackHolePulse 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+}
+
+/* Black Hole Core */
+.black-hole-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at center, #000 0%, #111 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 60px #000,
+        inset 0 0 20px rgba(255, 255, 255, 0.1);
+    animation: corePulse 4s ease-in-out infinite;
+}
+
+/* Accretion Disk Rings */
+.black-hole-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid;
+    opacity: 0.6;
+    mix-blend-mode: screen;
+}
+
+.ring-1 {
+    width: 120px;
+    height: 120px;
+    border-color: rgba(74, 144, 226, 0.3);
+    animation: rotateRing 8s linear infinite;
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.2);
+}
+
+.ring-2 {
+    width: 180px;
+    height: 180px;
+    border-color: rgba(108, 92, 231, 0.3);
+    animation: rotateRing 12s linear infinite reverse;
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.2);
+}
+
+.ring-3 {
+    width: 240px;
+    height: 240px;
+    border-color: rgba(255, 255, 255, 0.2);
+    animation: rotateRing 16s linear infinite;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Particle System */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #fff;
+    animation: particleOrbit 4s linear infinite;
+    opacity: 0;
+}
+
+/* Particle Colors and Variations */
+.particle:nth-child(odd) {
+    background: linear-gradient(45deg, #4a90e2, #6c5ce7);
+    box-shadow: 0 0 10px #4a90e2;
+}
+
+.particle:nth-child(even) {
+    background: linear-gradient(45deg, #6c5ce7, #a8b2ff);
+    box-shadow: 0 0 10px #6c5ce7;
+}
+
+.particle:nth-child(3n) {
+    width: 4px;
+    height: 4px;
+    animation-duration: 5s;
+}
+
+.particle:nth-child(3n+1) {
+    width: 2px;
+    height: 2px;
+    animation-duration: 3s;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes blackHolePulse {
+    0% { 
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+    50% { 
+        transform: scale(1.05) rotate(180deg);
+        filter: brightness(1.2);
+    }
+    100% { 
+        transform: scale(1) rotate(360deg);
+        filter: brightness(1);
+    }
+}
+
+@keyframes corePulse {
+    0% { 
+        box-shadow: 
+            0 0 60px #000,
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% { 
+        box-shadow: 
+            0 0 80px #000,
+            inset 0 0 30px rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% { 
+        box-shadow: 
+            0 0 60px #000,
+            inset 0 0 20px rgba(255, 255, 255, 0.1);
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes rotateRing {
+    from { 
+        transform: translate(-50%, -50%) rotate(0deg);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    to { 
+        transform: translate(-50%, -50%) rotate(360deg);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+}
+
+@keyframes particleOrbit {
+    0% {
+        transform: 
+            rotate(0deg) 
+            translateX(120px) 
+            rotate(0deg) 
+            scale(1);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: 
+            rotate(360deg) 
+            translateX(120px) 
+            rotate(-360deg) 
+            scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Particle Animation Delays */
+.particle:nth-child(1) { animation-delay: 0s; }
+.particle:nth-child(2) { animation-delay: 0.2s; }
+.particle:nth-child(3) { animation-delay: 0.4s; }
+.particle:nth-child(4) { animation-delay: 0.6s; }
+.particle:nth-child(5) { animation-delay: 0.8s; }
+.particle:nth-child(6) { animation-delay: 1s; }
+.particle:nth-child(7) { animation-delay: 1.2s; }
+.particle:nth-child(8) { animation-delay: 1.4s; }
+.particle:nth-child(9) { animation-delay: 1.6s; }
+.particle:nth-child(10) { animation-delay: 1.8s; }
+.particle:nth-child(11) { animation-delay: 2s; }
+.particle:nth-child(12) { animation-delay: 2.2s; }
+.particle:nth-child(13) { animation-delay: 2.4s; }
+.particle:nth-child(14) { animation-delay: 2.6s; }
+.particle:nth-child(15) { animation-delay: 2.8s; }
+.particle:nth-child(16) { animation-delay: 3s; }
+.particle:nth-child(17) { animation-delay: 3.2s; }
+.particle:nth-child(18) { animation-delay: 3.4s; }
+.particle:nth-child(19) { animation-delay: 3.6s; }
+.particle:nth-child(20) { animation-delay: 3.8s; } 
