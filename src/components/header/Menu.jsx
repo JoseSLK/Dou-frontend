@@ -62,7 +62,7 @@ export function LinkModules() {
             {isDropdownVisible && (
                 <div className={`dou-strip-options ${showOptions? "open": ""}`}>
                     <Link to="/dashboard/education" className="dou-strip-option">Contenido</Link>
-                    {/* <Link to="/constest" className="dou-strip-option">Contest</Link> */}
+                    <Link to="/dashboard/contest" className="dou-strip-option">Contest</Link>
                     <Link to="/dashboard/exercises" className="dou-strip-option">Ejercicios</Link>
                 </div>
             )}

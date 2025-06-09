@@ -1,6 +1,6 @@
 import React from "react";
 import "./about.css";
-import douLogo from "../../../public/dou_experimental.png";
+import douLogo from "/dou_experimental.png?url";
 
 export function About () {
     return (
