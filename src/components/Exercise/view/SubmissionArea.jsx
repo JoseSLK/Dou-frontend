@@ -4,7 +4,7 @@ import { CodeSubmission } from "./CodeSubmission";
 import { SubmissionList } from "./SubmissionList";
 import "./style/Submission.css";
 
-export function SubmissionArea({ problemId }) {
+export function SubmissionArea({ problemId, onSubmit, onVerdict }) {
     const [activeTab, setActiveTab] = useState("submission");
 
     return (
@@ -25,7 +25,11 @@ export function SubmissionArea({ problemId }) {
             </div>
 
             {activeTab === "submission" ? (
-                <CodeSubmission problemId={problemId} />
+                <CodeSubmission 
+                    problemId={problemId} 
+                    onSubmit={onSubmit}
+                    onVerdict={onVerdict}
+                />
             ) : (
                 <SubmissionList problemId={problemId}/>
             )}

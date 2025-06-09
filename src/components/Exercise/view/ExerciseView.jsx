@@ -21,9 +21,11 @@ import { useExercise } from "../../../Context/ExerciseContext";
  * @component
  * @param {Object} props - Propiedades del componente
  * @param {string} [props.initialProblemId=null] - ID del ejercicio a cargar inicialmente
+ * @param {Function} [props.onSubmit] - Callback que se ejecuta cuando se envía una solución
+ * @param {Function} [props.onVerdict] - Callback que se ejecuta cuando se recibe un veredicto
  * @returns {JSX.Element} Vista de ejercicio con selector o panel de ejercicio
  */
-export function ExerciseView({ initialProblemId = null }) {
+export function ExerciseView({ initialProblemId = null, onSubmit, onVerdict }) {
     const navigate = useNavigate();
     const { selectedExercise, exercises, selectExercise, fetchExerciseById } = useExercise();
 
@@ -55,7 +57,11 @@ export function ExerciseView({ initialProblemId = null }) {
                         <DisplayExercise exercise={selectedExercise} />
                     </div>
                     <div className="exercise-view-right-panel">
-                        <SubmissionArea problemId={selectedExercise?.problem_id} />
+                        <SubmissionArea 
+                            problemId={selectedExercise?.problem_id} 
+                            onSubmit={onSubmit}
+                            onVerdict={onVerdict}
+                        />
                     </div>
                 </>
             )}

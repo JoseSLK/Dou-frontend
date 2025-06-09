@@ -18,9 +18,11 @@ import { submissionService } from '../../../services/submissionService';
  * @component
  * @param {Object} props - Propiedades del componente
  * @param {string} props.problemId - ID del ejercicio al que se presenta la solución
+ * @param {Function} [props.onSubmit] - Callback que se ejecuta cuando se envía una solución
+ * @param {Function} [props.onVerdict] - Callback que se ejecuta cuando se recibe un veredicto
  * @returns {JSX.Element} Editor de código con opciones de envío
  */
-export function CodeSubmission({ problemId }) {
+export function CodeSubmission({ problemId, onSubmit, onVerdict }) {
     const [selectedLanguage, setSelectedLanguage] = useState("cpp");
     const [code, setCode] = useState("");
     const [file, setFile] = useState(null);
@@ -81,7 +83,20 @@ export function CodeSubmission({ problemId }) {
 
         try {
             setSubmissionStatus("Submitting...");
+            
+            // Notificar que se está enviando la solución (para WebSocket)
+            if (onSubmit) {
+                console.log('Notificando envío de solución via WebSocket');
+                onSubmit(problemId);
+            }
+            
             const responseData = await submissionService.submitCode(formData);
+            
+            // Notificar el veredicto recibido (para WebSocket)
+            if (onVerdict) {
+                console.log('Notificando veredicto via WebSocket:', responseData.veredict);
+                onVerdict(responseData.veredict, responseData);
+            }
             
             switch (responseData.veredict) {
                 case "AC":
@@ -100,7 +115,7 @@ export function CodeSubmission({ problemId }) {
             console.error("Submission error:", error.message);
             setSubmissionStatus("Error: Could not connect to server.");
         }
-    }, [user, problemId, selectedLanguage, code, file]);
+    }, [user, problemId, selectedLanguage, code, file, onSubmit, onVerdict]);
 
     const lineNumbers = useMemo(() => 
         Array.from({ length: code.split("\n").length || 1 }, (_, i) => (
